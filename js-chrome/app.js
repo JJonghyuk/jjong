@@ -1,6 +1,6 @@
 // *스크립트 사전*
 
-// ---------------------------------- WELCOME TO JAVASCRIPT ----------------------------------
+// ---------------------------------- #2_WELCOME TO JAVASCRIPT ----------------------------------
 
 // * 2 > integer
 // * 1.5 > float
@@ -148,10 +148,83 @@
 // const age = parseInt(prompt("How old are you?"));
 // console.log(age);
 
+// * isNaN 은 무언가가 NaN인지 판별하는 방법 - 글자입력하면 ture / 숫자입력하면 false
+// *OR
+// - true || true === true
+// - false || true === true
+// - true || false === true
+// - false || false === false
+// *AND
+// - true && true === true
+// - false && true === false
+// - true && false === false
+// - false && false === false
+
+// - 예제 -
+// const age = parseInt(prompt("How old are you?"));
+// console.log(isNaN(age));
+
+// if(isNaN(age) || age < 0){
+//     console.log("Plaease write a real positive number");
+// }else if(age < 18){
+//     console.log("You are too young.");
+// }else if(age >= 18 && age <= 50){
+//     console.log("You can drink");
+// }else if(age > 50 && age <= 80){
+//     console.log("You should exrcise");
+// }else if(age === 100){
+//     console.log("wow you are wise");
+// }else if(age > 80){
+//     console.log("You can do whatever you want.");
+// }
 
 
-// ---------------------------------- //WELCOME TO JAVASCRIPT ----------------------------------
+// ---------------------------------- //#2_WELCOME TO JAVASCRIPT ----------------------------------
 
+// ---------------------------------- #3_JAVASCRIPT ON THE BROWSER ----------------------------------
 
+// * document - 브라우저에 이미 존재하는 object, 접근할 수 있는 HTML
+// * console.dir()
+//   - 괄호안에 document, title 등 넣으면 object 정보 보여줌
+//   - console.dir(document) --> document 의 object를 자바스크립트 콘솔로 보여줌
+// * document.title - html의 title 값을 가져옴.
+// * document.title = "xxxxx" - "xxxxx"라고 타이틀 값을 수정할 수 있음.
 
+// * getElementById("") - document.getElementById("") 괄호 안에는 string 들어감 (하나만 불러옴, 하위요소 못 가져옴)
+// * getElementsByClassName() - 많은 element를 가져올때 씀(array를 반환)
+// * getElementsByTagName() - name을 할당할 수 있음(array를 반환)
+// * querySelector() - element를 CSS selector방식으로 검색할 수 있음 (ex. h1:first-child)
+//   - 단 하나의 element를 return해줌
+//   ⇒ hello란 class 내부에 있는 h1을 가지고 올 수 있다(id도 가능함)
+//   - 첫번째 element만 가져옴
+//   - querySelector("#hello); 와 getElementById("hello"); 는 같은 일을 하는 것임
+//     하지만 후자는 하위요소 가져오는 것을 못하므로 전자만 쓸거다. ex) document.querySelector(".hellos h1")
+//  * querySelectorAll() - h1이 들어있는 array를 가져다 줌
 
+// - 예제 -
+// const title = document.getElementById("title");
+// title.innerText = "Got you!"
+
+// console.log(title.id);
+// console.log(title.className);
+
+// - 예제 -
+// const title = document.getElementsByTagName("h1");
+// const title = document.querySelector(".hello h1");
+// const title = document.querySelectorAll(".hello h1");
+
+// console.dir(title)
+// title.style.color = "blue";
+
+// 기본적으로 object로 표시한 element를 보여줌(전부 js object임) 그 element 중 앞에 on이 붙은 것들은 event임
+// * addEventListener() - event를 추가 하는 함수
+
+const title = document.querySelector(".hello h1");
+
+function handleTitleClick() {
+    console.log("title was clicked");
+}
+
+title.addEventListener("click",handleTitleClick) // 함수 실행 () 넣지 않는 이유는 클릭 했을때에만 실행이 되게 하기 위해서 안넣음
+
+// ---------------------------------- //#3_JAVASCRIPT ON THE BROWSER ----------------------------------
