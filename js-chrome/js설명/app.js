@@ -13,7 +13,7 @@
 // * constant(상수) / const - 바뀌지 않는 값.
 // * let - 바꿀수 있는 값 (처음 선언 할때만 필요 하고 그 뒤에 값을 선언 할때는 let 안해도 됨)
 // * camelCase(낙타 등 모양) 자바스크립트 - ex) myName 단어 별로 대문자를 사용.
-// * snake_cass(뱀 모양) 파이썬 - ex) my_name 단어 별로 _ 추가하여 사용
+// * snake_case(뱀 모양) 파이썬 - ex) my_name 단어 별로 _ 추가하여 사용
 // * null - 자바스크립트에게 여기엔 값이'비어 있음'을 의미, 자연적으로 발생하지 않음
 // * undefined - 어떤 variables(변수)이 메모리에 있지만 '값이 없음 or 정의 되지 않음'을 의미
 // * NaN - Not a Number(숫자가 아님) 이라는 의미
@@ -23,6 +23,10 @@
 //   - days[2] = "water" // 데이라는 변수의 오브젝트 인덱스 2번인 "안녕하세요"를 "water"로 교체한다는 뜻.
 //   - push() 함수는 array(배열) 안에 추가 하는 기능 [ays.push('생선') // days라는 변수에 '생선'이라는 string 값을 추가해준것.]
 //   - object 만들기 / object 안에서는 = 를 사용 하지 않는다. : 를 사용하고 , 를 마지막에 붙인다.(property를 가진 데이터를 저장)
+// *length - string의 갯수를 확인
+// ★ 중요 ★
+// form을 submit하면 브라우저는 기본적으로 페이지를 새로고침 하도록 되어있다. << 우리가 원하는 것이 아님!
+// preventDefault() 함수를 추가함으로써 브라우저의 기본 동작을 막을 수 있다!!
 
 // - 예제 -
 // const player = { // object는 중괄호를 사용
@@ -68,7 +72,7 @@
 // player.sayHello("lynn");
  
 // - 계산기 과제
-// const calculater = {
+// const calculator = {
 //     add: function(a,b){
 //         console.log(a + b);
 //     },
@@ -81,15 +85,15 @@
 //     times: function(a,b){
 //         console.log(a * b);
 //     },
-//     powerof: function(a,b){
+//     powerOf: function(a,b){
 //         console.log(a ** b);
 //     },
 // }
-// calculater.add(1,2);
-// calculater.min(2,1);
-// calculater.div(4,2);
-// calculater.times(4,2);
-// calculater.powerof(4,2);
+// calculator.add(1,2);
+// calculator.min(2,1);
+// calculator.div(4,2);
+// calculator.times(4,2);
+// calculator.powerOf(4,2);
 
 // * Return - function의 밖과 소통 하는 방법
 //   - console.log는 그림의 떡. 꺼내 먹으려면 return필요
@@ -104,7 +108,7 @@
 // console.log(krAge)
 
 // - 예제 -
-// const calculater = {
+// const calculator = {
 //     add: function(a,b){
 //         return a + b;
 //     },
@@ -121,11 +125,11 @@
 //         return a ** b;
 //     },
 // }
-// const addResult = calculater.add(2,5);
-// const minResult = calculater.min(addResult, 1);
-// const timesResult = calculater.times(addResult, 10)
-// const divResult = calculater.div(timesResult, minResult);
-// const powerResult = calculater.power(divResult, minResult);
+// const addResult = calculator.add(2,5);
+// const minResult = calculator.min(addResult, 1);
+// const timesResult = calculator.times(addResult, 10)
+// const divResult = calculator.div(timesResult, minResult);
+// const powerResult = calculator.power(divResult, minResult);
 
 // * prompt();라는 함수는 사용자에게 창을 띄어 값을 받음. (오랜된 방식 요즘에는 안씀)
 // * typeof 키워드를 쓰면 type를 볼 수 있음 - typeof xxxxxxx
@@ -148,7 +152,7 @@
 // const age = parseInt(prompt("How old are you?"));
 // console.log(age);
 
-// * isNaN 은 무언가가 NaN인지 판별하는 방법 - 글자입력하면 ture / 숫자입력하면 false
+// * isNaN 은 무언가가 NaN인지 판별하는 방법 - 글자입력하면 true / 숫자입력하면 false
 // *OR
 // - true || true === true
 // - false || true === true
@@ -165,13 +169,13 @@
 // console.log(isNaN(age));
 
 // if(isNaN(age) || age < 0){
-//     console.log("Plaease write a real positive number");
+//     console.log("Please write a real positive number");
 // }else if(age < 18){
 //     console.log("You are too young.");
 // }else if(age >= 18 && age <= 50){
 //     console.log("You can drink");
 // }else if(age > 50 && age <= 80){
-//     console.log("You should exrcise");
+//     console.log("You should exercise");
 // }else if(age === 100){
 //     console.log("wow you are wise");
 // }else if(age > 80){
@@ -218,13 +222,80 @@
 
 // 기본적으로 object로 표시한 element를 보여줌(전부 js object임) 그 element 중 앞에 on이 붙은 것들은 event임
 // * addEventListener() - event를 추가 하는 함수
+// listen하고 싶은 event를 찾는 가장 좋은 방법은, 구글에 찾고 싶은 element의 이름, 예를들어 h1 html element mdn을 검색.
+// 우리는 javascript의 element를 원하니, 링크에 Web APIs라는 문장이 포함된 페이지를 찾아. 왜냐면 이건 JS관점의 HTML Heading Element란 의미야.
+// 너무 복잡하면 element를 console.dir로 출력해서 on~ 이라고 적혀있는걸 사용하면 됨.
 
-const title = document.querySelector(".hello h1");
+// title.onMouseEnter = handleMouseEnter; / title.addEventListener(“mouseenter” , handleMouseEnter);
+// 위에 두 코드는 동일하나 *addEventListener를 선호하는 이유는 *removeEventListener을 통해서 event listener을 제거할수있기 때문이다.
+// document에서 body,head,title 은 중요해서 언제든 - ex) document.body 로 가져올수있지만
+// div나 h1 등 element 들은 querySelector getElementById등으로 찾아야한다. - ex) document.querySelector(“h1”);
+// window는 기본제공
 
-function handleTitleClick() {
-    console.log("title was clicked");
-}
+// *className은 기존 클래스를 삭제하고 새로 넣는 함수라서 classList를 사용
+// string을 반복하는 순간에는 cont(constant)를 생성하여 공통으로 작업
+// *classList.toggle() 함수는 클래스가 있으면 빼고, 없으면 넣는 형식의 함수
 
-title.addEventListener("click",handleTitleClick) // 함수 실행 () 넣지 않는 이유는 클릭 했을때에만 실행이 되게 하기 위해서 안넣음
+// - 예제 -
+// const title = document.querySelector("div.hello:first-child h1");
+
+// function handleTitleClick() {
+//     // title.style.color = "blue";
+
+//     // const currentColor = title.style.color;
+//     // let newColor;
+//     // if(currentColor === "blue"){
+//     //     newColor = "tomato";
+//     // }else{
+//     //     newColor = "blue";
+//     // }
+//     // title.style.color = newColor;
+
+//     // const clickedClass = "clicked";
+//     // if(title.classList.contains(clickedClass)){
+//     //     title.classList.remove(clickedClass);
+//     // }else{
+//     //     title.classList.add(clickedClass);
+//     // }
+
+//     title.classList.toggle("clicked");
+// }
+
+// function handleMouseEnter(){
+//     title.innerText = "Mouse is here!";
+// }
+
+// function handleMouseLeave(){
+//     title.innerText = "Mouse is gone!";
+// }
+
+// function handleWindowOffline() {
+//     alert('SOS No WIFI');
+// }
+    
+// function handleWindowOnline() {
+//     alert('ALL GOOD');
+// }
+
+// function handleWindowResize(){
+//     document.body.style.backgroundColor = "tomato";
+// }
+// function handleWindowCopy(){
+//     alert("copier");
+// }
+
+// title.addEventListener("click",handleTitleClick); // 함수 실행 () 넣지 않는 이유는 클릭 했을때에만 실행이 되게 하기 위해서 안넣음
+// title.addEventListener("mouseenter", handleMouseEnter);
+// title.addEventListener("mouseleave", handleMouseLeave);
+
+// window.addEventListener("resize", handleWindowResize);
+// window.addEventListener("copy", handleWindowCopy);
+// window.addEventListener("offline", handleWindowOffline);
+// window.addEventListener("online", handleWindowOnline);
+
 
 // ---------------------------------- //#3_JAVASCRIPT ON THE BROWSER ----------------------------------
+
+
+
+
