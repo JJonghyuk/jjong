@@ -1,29 +1,29 @@
-// *스크립트 사전*
+// ★스크립트 사전★
 
 // ---------------------------------- #2_WELCOME TO JAVASCRIPT ----------------------------------
 
-// * 2 > integer
-// * 1.5 > float
-// * number(숫자,정수)
-// * text(문자)
-// * variables(변수) - 값을 저장 하거나 유지하는 역할.
-// * string - 처음부터 끝까지 모두 글자로 이뤄져 있다.
-// * boolean - true 또는 false
-// * operation(연산)
-// * constant(상수) / const - 바뀌지 않는 값.
-// * let - 바꿀수 있는 값 (처음 선언 할때만 필요 하고 그 뒤에 값을 선언 할때는 let 안해도 됨)
-// * camelCase(낙타 등 모양) 자바스크립트 - ex) myName 단어 별로 대문자를 사용.
-// * snake_case(뱀 모양) 파이썬 - ex) my_name 단어 별로 _ 추가하여 사용
-// * null - 자바스크립트에게 여기엔 값이'비어 있음'을 의미, 자연적으로 발생하지 않음
-// * undefined - 어떤 variables(변수)이 메모리에 있지만 '값이 없음 or 정의 되지 않음'을 의미
-// * NaN - Not a Number(숫자가 아님) 이라는 의미
+// ★ 2 > integer
+// ★ 1.5 > float
+// ★ number(숫자,정수)
+// ★ text(문자)
+// ★ variables(변수) - 값을 저장 하거나 유지하는 역할.
+// ★ string - 처음부터 끝까지 모두 글자로 이뤄져 있다.
+// ★ boolean - true 또는 false
+// ★ operation(연산)
+// ★ constant(상수) / const - 바뀌지 않는 값.
+// ★ let - 바꿀수 있는 값 (처음 선언 할때만 필요 하고 그 뒤에 값을 선언 할때는 let 안해도 됨)
+// ★ camelCase(낙타 등 모양) 자바스크립트 - ex) myName 단어 별로 대문자를 사용.
+// ★ snake_case(뱀 모양) 파이썬 - ex) my_name 단어 별로 _ 추가하여 사용
+// ★ null - 자바스크립트에게 여기엔 값이'비어 있음'을 의미, 자연적으로 발생하지 않음
+// ★ undefined - 어떤 variables(변수)이 메모리에 있지만 '값이 없음 or 정의 되지 않음'을 의미
+// ★ NaN - Not a Number(숫자가 아님) 이라는 의미
 
-// * array(배열)- 하나의 variables(변수) 안에 데이터의 list를 가지는 것
+// ★ array(배열)- 하나의 variables(변수) 안에 데이터의 list를 가지는 것
 //   const player = ["nico",10,true]
 //   - days[2] = "water" // 데이라는 변수의 오브젝트 인덱스 2번인 "안녕하세요"를 "water"로 교체한다는 뜻.
 //   - push() 함수는 array(배열) 안에 추가 하는 기능 [ays.push('생선') // days라는 변수에 '생선'이라는 string 값을 추가해준것.]
 //   - object 만들기 / object 안에서는 = 를 사용 하지 않는다. : 를 사용하고 , 를 마지막에 붙인다.(property를 가진 데이터를 저장)
-// *length - string의 갯수를 확인
+// ★length - string의 갯수를 확인
 // ★ 중요 ★
 // form을 submit하면 브라우저는 기본적으로 페이지를 새로고침 하도록 되어있다. << 우리가 원하는 것이 아님!
 // preventDefault() 함수를 추가함으로써 브라우저의 기본 동작을 막을 수 있다!!
@@ -41,7 +41,7 @@
 // player.points = player.points + 15 // const 의 object는 수정이 가능하다. ex) player = 'ㄱㄱ' - 이거는 수정 안됨
 // console.log(player);
 
-// * function - 계속 반복해서 사용할 수 있는 코드 조각
+// ★ function - 계속 반복해서 사용할 수 있는 코드 조각
 //   - argument(인수) - function을 실행 하는 동안 어떤 정보를 function에게 보내는 방법
 //   - 내부 function 부터 실행함 --> 2.실행 parseInt( 1.실행 prompt("How old are you?"));
 
@@ -83,10 +83,10 @@
 //         console.log(a / b);
 //     },
 //     times: function(a,b){
-//         console.log(a * b);
+//         console.log(a ★ b);
 //     },
 //     powerOf: function(a,b){
-//         console.log(a ** b);
+//         console.log(a ★★ b);
 //     },
 // }
 // calculator.add(1,2);
@@ -95,7 +95,7 @@
 // calculator.times(4,2);
 // calculator.powerOf(4,2);
 
-// * Return - function의 밖과 소통 하는 방법
+// ★ Return - function의 밖과 소통 하는 방법
 //   - console.log는 그림의 떡. 꺼내 먹으려면 return필요
 //   - return 선언 전의 값은 수행 하지만, return 값 이후의 작업은 수행 하지 않음
 
@@ -116,13 +116,13 @@
 //         return a - b;
 //     },
 //     times: function(a,b){
-//         return a * b;
+//         return a ★ b;
 //     },
 //     div: function(a,b){
 //         return a / b;
 //     },
 //     power: function(a,b){
-//         return a ** b;
+//         return a ★★ b;
 //     },
 // }
 // const addResult = calculator.add(2,5);
@@ -131,13 +131,13 @@
 // const divResult = calculator.div(timesResult, minResult);
 // const powerResult = calculator.power(divResult, minResult);
 
-// * prompt();라는 함수는 사용자에게 창을 띄어 값을 받음. (오랜된 방식 요즘에는 안씀)
-// * typeof 키워드를 쓰면 type를 볼 수 있음 - typeof xxxxxxx
-// * parseInt() - string --> number로 변환해주는 함수
+// ★ prompt();라는 함수는 사용자에게 창을 띄어 값을 받음. (오랜된 방식 요즘에는 안씀)
+// ★ typeof 키워드를 쓰면 type를 볼 수 있음 - typeof xxxxxxx
+// ★ parseInt() - string --> number로 변환해주는 함수
 // prompt();를 사용하면 답을 할때까지 코드의 실행을 멈추고, 매우 오래된 방법임. 별로 안이쁨. css로 바꾸지도 못함.
 // const age = prompt("how old are you?");
 // console.log(typeof age);
-// prompt();에서 숫자를 입력해도 string이라고 뜬다. *string이 디폴트이기 때문이다.
+// prompt();에서 숫자를 입력해도 string이라고 뜬다. ★string이 디폴트이기 때문이다.
 // 한 type로 받아서 다른 type로 바꾸는 작업을 해야한다. "15"-->15
 // console.log(typeof "15", typeof parseInt("15")); --> string number
 // 이렇게 숫자로 변환이 되야 비교를 할 수 있다.
@@ -152,13 +152,13 @@
 // const age = parseInt(prompt("How old are you?"));
 // console.log(age);
 
-// * isNaN 은 무언가가 NaN인지 판별하는 방법 - 글자입력하면 true / 숫자입력하면 false
-// *OR
+// ★ isNaN 은 무언가가 NaN인지 판별하는 방법 - 글자입력하면 true / 숫자입력하면 false
+// ★OR
 // - true || true === true
 // - false || true === true
 // - true || false === true
 // - false || false === false
-// *AND
+// ★AND
 // - true && true === true
 // - false && true === false
 // - true && false === false
@@ -187,23 +187,23 @@
 
 // ---------------------------------- #3_JAVASCRIPT ON THE BROWSER ----------------------------------
 
-// * document - 브라우저에 이미 존재하는 object, 접근할 수 있는 HTML
-// * console.dir()
+// ★ document - 브라우저에 이미 존재하는 object, 접근할 수 있는 HTML
+// ★ console.dir()
 //   - 괄호안에 document, title 등 넣으면 object 정보 보여줌
 //   - console.dir(document) --> document 의 object를 자바스크립트 콘솔로 보여줌
-// * document.title - html의 title 값을 가져옴.
-// * document.title = "xxxxx" - "xxxxx"라고 타이틀 값을 수정할 수 있음.
+// ★ document.title - html의 title 값을 가져옴.
+// ★ document.title = "xxxxx" - "xxxxx"라고 타이틀 값을 수정할 수 있음.
 
-// * getElementById("") - document.getElementById("") 괄호 안에는 string 들어감 (하나만 불러옴, 하위요소 못 가져옴)
-// * getElementsByClassName() - 많은 element를 가져올때 씀(array를 반환)
-// * getElementsByTagName() - name을 할당할 수 있음(array를 반환)
-// * querySelector() - element를 CSS selector방식으로 검색할 수 있음 (ex. h1:first-child)
+// ★ getElementById("") - document.getElementById("") 괄호 안에는 string 들어감 (하나만 불러옴, 하위요소 못 가져옴)
+// ★ getElementsByClassName() - 많은 element를 가져올때 씀(array를 반환)
+// ★ getElementsByTagName() - name을 할당할 수 있음(array를 반환)
+// ★ querySelector() - element를 CSS selector방식으로 검색할 수 있음 (ex. h1:first-child)
 //   - 단 하나의 element를 return해줌
 //   ⇒ hello란 class 내부에 있는 h1을 가지고 올 수 있다(id도 가능함)
 //   - 첫번째 element만 가져옴
 //   - querySelector("#hello); 와 getElementById("hello"); 는 같은 일을 하는 것임
 //     하지만 후자는 하위요소 가져오는 것을 못하므로 전자만 쓸거다. ex) document.querySelector(".hellos h1")
-//  * querySelectorAll() - h1이 들어있는 array를 가져다 줌
+//  ★ querySelectorAll() - h1이 들어있는 array를 가져다 줌
 
 // - 예제 -
 // const title = document.getElementById("title");
@@ -221,20 +221,20 @@
 // title.style.color = "blue";
 
 // 기본적으로 object로 표시한 element를 보여줌(전부 js object임) 그 element 중 앞에 on이 붙은 것들은 event임
-// * addEventListener() - event를 추가 하는 함수
+// ★ addEventListener() - event를 추가 하는 함수
 // listen하고 싶은 event를 찾는 가장 좋은 방법은, 구글에 찾고 싶은 element의 이름, 예를들어 h1 html element mdn을 검색.
 // 우리는 javascript의 element를 원하니, 링크에 Web APIs라는 문장이 포함된 페이지를 찾아. 왜냐면 이건 JS관점의 HTML Heading Element란 의미야.
 // 너무 복잡하면 element를 console.dir로 출력해서 on~ 이라고 적혀있는걸 사용하면 됨.
 
 // title.onMouseEnter = handleMouseEnter; / title.addEventListener(“mouseenter” , handleMouseEnter);
-// 위에 두 코드는 동일하나 *addEventListener를 선호하는 이유는 *removeEventListener을 통해서 event listener을 제거할수있기 때문이다.
+// 위에 두 코드는 동일하나 ★addEventListener를 선호하는 이유는 ★removeEventListener을 통해서 event listener을 제거할수있기 때문이다.
 // document에서 body,head,title 은 중요해서 언제든 - ex) document.body 로 가져올수있지만
 // div나 h1 등 element 들은 querySelector getElementById등으로 찾아야한다. - ex) document.querySelector(“h1”);
 // window는 기본제공
 
-// *className은 기존 클래스를 삭제하고 새로 넣는 함수라서 classList를 사용
+// ★className은 기존 클래스를 삭제하고 새로 넣는 함수라서 classList를 사용
 // string을 반복하는 순간에는 cont(constant)를 생성하여 공통으로 작업
-// *classList.toggle() 함수는 클래스가 있으면 빼고, 없으면 넣는 형식의 함수
+// ★classList.toggle() 함수는 클래스가 있으면 빼고, 없으면 넣는 형식의 함수
 
 // - 예제 -
 // const title = document.querySelector("div.hello:first-child h1");
@@ -284,7 +284,7 @@
 //     alert("copier");
 // }
 
-// title.addEventListener("click",handleTitleClick); // 함수 실행 () 넣지 않는 이유는 클릭 했을때에만 실행이 되게 하기 위해서 안넣음
+// title.addEventListener("click",handleTitleClick); // ★★★중요★★★ addEventListener 안에 있는 함수는 직접 실행()하지 않는다.
 // title.addEventListener("mouseenter", handleMouseEnter);
 // title.addEventListener("mouseleave", handleMouseLeave);
 
@@ -296,6 +296,43 @@
 
 // ---------------------------------- //#3_JAVASCRIPT ON THE BROWSER ----------------------------------
 
+// ---------------------------------- #4 LOGIN ----------------------------------
 
+// function onLoginSubmit(event){ // ★함수 실행시 event 첫번째 인자는 그에 대한 정보를 담고 있음
+//     event.preventDefault(); // 브라우저가 기본 동작을 실행하지 못하게 막기 // event object는 preventDefault함수를 기본적으로 갖고 있음
+//     console.log(event);
+// }
+// loginForm.addEventListener("submit", onLoginSubmit); // submit 이벤트가 발생한다면, onLoginSubmit함수를 실행시킨다는 의미 // JS는 onLoginSubmit함수 호출시 인자를 담아서 호출함. 해당 인자는 event object를 담은 정보들
+
+// ★ 중요 ★
+// form 기본 동작은 submit이며, submit하면 브라우저는 기본적으로 페이지를 새로고침 하도록 되어있다. << 우리가 원하는 것이 아님!
+// preventDefault() 함수를 추가함으로써 브라우저의 기본 동작을 막을 수 있다!!
+// 이 preventDefault 함수는 EventListener 함수의 '첫 번째 argument' 안에 있는 함수이다. 첫 argument는 지금 막 벌어진 event들에 대한 정보를 갖고 있다.
+// JS는(기본적으로)argument를 담아서 함수를 호출하는데, 이 argument가 기본 정보들을 제공하고 있다. ex) 누가 submit주체인지, 몇 시에 submit을 했는지 등등 콘솔에 출력해보면 알 수 있음
+
+// ★★ addEventListener 안에 있는 함수는 직접 실행하지 않는다.
+// 브라우저가 실행시켜주고
+// 브라우저에서 해당 이벤트에 대한 정보 즉, object를(event information) 가지게 된다. ex) handleLinkClick({event information})
+// addEventListener의 함수에서 object에 대한 자리만 할당해주면 해당 이벤트가 발생시킨 정보들에 대한 object들을 볼 수 있다!
+// 이때 해당 이벤트가 가진 기본 Default값을 발생시키지 않기 하게 위해선 preventDefault를 이용하여 막을 수 있다!
+
+// ``(백틱 기호), string과 변수를 함께 쓸려면 백틱기호 안에서 ${}를 사용하여 사용 ex) `Hello ${변수명}`
+// const HIDDEN_CLASSNAME = 'hidden'; --> 관습: string만 포함된 변수는 대문자로 쓴다 + 중요한 변수가 아니라 서.
+
+// ★ localStorage - 브라우저에 무언가를 저장한 후 나중에 가져 올 수 있음.
+//   localStorage.setItem(key, value); --> 로컬 저장소에 해당 키와 값을 저장함.
+//   localStorage.getItem(key);  --> 로컬 저장소에 해당 키에 해당되는 값을 불러옴.
+//   localStorage.removeItem(key); --> 로컬 저장소에 해당 키에 해당되는 키, 값을 삭제함.
+     
+//   - Cookie: 만료일자를 지정하게 되어 있어서 영구적이지 않습니다. 또한 용량 제한이 있습니다.
+//   - Web storage: 크게 Local storage 와 Session storage 가 있습니다.
+//   1. Local storage: 저장한 데이터를 직접 지우지 않는 한 데이터가 영구적으로 저장됩니다.
+//   2. Session storage: 브라우저 종료 시 데이터가 사라집니다.
+
+
+
+
+
+// ---------------------------------- //#4 LOGIN ----------------------------------
 
 
