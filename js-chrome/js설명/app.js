@@ -5,6 +5,7 @@
 // * 2 > integer
 // * 1.5 > float
 // * number(숫자,정수)
+// * float(소수)
 // * text(문자)
 // * variables(변수) - 값을 저장 하거나 유지하는 역할.
 // * string - 처음부터 끝까지 모두 글자로 이뤄져 있다.
