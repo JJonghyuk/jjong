@@ -294,6 +294,23 @@
 // window.addEventListener("offline", handleWindowOffline);
 // window.addEventListener("online", handleWindowOnline);
 
+// ex)
+// const superEventHandler = {
+//     'sayHello': () => {
+//         console.log('Hello!');
+//     },
+
+//     'sayHi': () => {
+//         console.log('Hi!');
+//     },
+
+//     'sayLikeThis': (text) => {
+//         console.log(text);
+//     },
+
+//     someData: "Object는 key에 대한 value로 함수를 가질 수 있어요!"
+// }
+
 
 // ---------------------------------- //#3_JAVASCRIPT ON THE BROWSER ----------------------------------
 
