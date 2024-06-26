@@ -20,13 +20,20 @@ function deleteTodo(event){
 function paintToDo(newToDo){
     const li = document.createElement("li");
     li.id = newToDo.id;
+    li.className = "todo-item";
 
     const span = document.createElement("span");
-    li.appendChild(span);
+    span.className = "item-text"
     span.innerText = newToDo.text;
+    li.appendChild(span);
 
     const button = document.createElement("button");
-    button.innerText = "❌";
+    const buttonText = document.createElement("span");
+    buttonText.classList.add("blind")
+    buttonText.innerText = "todo 지우기"
+    button.className = "btn-close";
+    button.type = "button";
+    button.appendChild(buttonText);
     button.addEventListener("click",deleteTodo);
     li.appendChild(button);
 
@@ -44,6 +51,9 @@ function handleToDoSubmit(event){
     }
     toDos.push(newTodoObj);
     paintToDo(newTodoObj);
+
+    const todoWrap = document.querySelector(".todo-wrap");
+    todoWrap.classList.add("is-active");
     saveToDos();
 }
 
