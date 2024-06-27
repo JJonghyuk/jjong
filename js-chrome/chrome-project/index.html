@@ -9,7 +9,7 @@
 <body>
     <div class="wrap">
         <div class="contents">
-            <h2 id="clock" class="roboto-bold">00:00</h2>
+            <strong id="clock" class="roboto-bold">00:00</strong>
             <h1 id="greeting" class="roboto-bold hidden"></h1>
             <form id="login-form" class="hidden">
                 <input required maxlength="15" type="text" class="login-input" placeholder="What is your name?">
@@ -27,8 +27,11 @@
             <span class="author roboto-light"></span>
         </div>
         <div id="weather-box">
-            <span class="weather"></span>
-            <span class="city"></span>
+            <span class="weather roboto-light"></span>
+            <span class="city roboto-light"></span>
+        </div>
+        <div class="btn-wrap logout hidden">
+            <button type="button" class="logout-btn"><span class="blind">Log Out</span></button>
         </div>
         <div class="background"></div>
     </div>
