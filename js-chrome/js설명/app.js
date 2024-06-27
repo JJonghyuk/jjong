@@ -18,6 +18,7 @@
 // * null - 자바스크립트에게 여기엔 값이'비어 있음'을 의미, 자연적으로 발생하지 않음
 // * undefined - 어떤 variables(변수)이 메모리에 있지만 '값이 없음 or 정의 되지 않음'을 의미
 // * NaN - Not a Number(숫자가 아님) 이라는 의미
+// * alert - 알럿창을 호출
 
 // * array(배열) - 하나의 variables(변수) 안에 데이터의 list를 가지는 것
 //   const player = ["nico",10,true]
@@ -389,10 +390,10 @@
 // * JSON.parse("value") --> JSON 문자열(string)을 JavaScript array(배열/객체(object))로 변환
 //   - JSON.stringify로 array처럼 생긴 string으로 저장한 후 다시 JSON.parse 이용해 array로 꺼내는 방법
 // * forEach() --> forEach(함수명) - 이렇게 함수명을 넣어서 실행 시킬수 있음 ex) forEach(ex) 실행시에 ex(item) --> ex 인자로 forEach 문의 item값이 적용되어 들어감
-// * Date.now() - 밀리초(1000분의 1초) 주는 함수
-// * fliter("조건 값 or 함수") --> array에서 뭔가를 삭제할 때 실제로 array에서 지우는 게 아닌 지우고 싶은 item을 빼고 새 array를 만듦(item을 지우는 게 아닌 item을 제외하는 것)
-//   - fliter("조건 값 or 함수") --> array에서 콜백 함수의 true 인것만 잡아줌
-//   - const newArr = arr.filter((item) => item > 2), arr.filter(item => item > 2) / 이렇게 변수에 담을 수 있으며, function 함수 만들어서 사용 안하고 filter 안에서 선언하여 사용 가능
+// * Date.now() - 1970년 1월 1일 0시 0분 0초부터 현재까지 경과된 밀리초(1000분의 1초)를 number 형식으로 나타내는 함수
+// * filter("조건 값 or 함수") --> array에서 뭔가를 삭제할 때 실제로 array에서 지우는 게 아닌 지우고 싶은 item을 빼고 새 array를 만듦(item을 지우는 게 아닌 item을 제외하는 것)
+//   - filter("조건 값 or 함수") --> array에서 콜백 함수의 true 인것만 잡아줌
+//   - const newArr = arr.filter((item) => item > 2), arr.filter(item => item > 2) / 이렇게 변수에 담을 수 있으며, function 함수 만들어서 사용 안하고 filter 안에서 선언하여 사용 가능, 인자값은 아무거나 해도 상관 없음
 
 // ---------------------------------- //#7 TO DO LIST ----------------------------------
 

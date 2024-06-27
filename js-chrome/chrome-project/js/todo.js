@@ -1,5 +1,6 @@
 const toDoForm = document.getElementById("todo-form")
 const toDoInput = toDoForm.querySelector("input")
+const toDoWrap = document.querySelector(".todo-wrap")
 const toDoList = document.getElementById("todo-list")
 
 let toDos = [];
@@ -12,9 +13,15 @@ function saveToDos(){
 
 function deleteTodo(event){
     const li = event.target.parentElement;
+    
     li.remove();
-    toDos = toDos.filter(toDo => toDo.id !== parseInt(li.id));
+    toDos = toDos.filter(toDo => toDo.id !== parseInt(li.id)); // toDo -> 인자명은 아무거나 해도 상관 없음.
     saveToDos();
+    
+    if(toDos.length === 0){
+        localStorage.removeItem(TODOS_KEY)
+        toDoWrap.classList.remove("is-active");
+    }
 }
 
 function paintToDo(newToDo){
@@ -36,7 +43,7 @@ function paintToDo(newToDo){
     button.appendChild(buttonText);
     button.addEventListener("click",deleteTodo);
     li.appendChild(button);
-
+    
     toDoList.appendChild(li);
 }
 
@@ -52,8 +59,10 @@ function handleToDoSubmit(event){
     toDos.push(newTodoObj);
     paintToDo(newTodoObj);
 
-    const todoWrap = document.querySelector(".todo-wrap");
-    todoWrap.classList.add("is-active");
+    if(toDos.length !== 0 && !toDoWrap.classList.contains("is-active")){
+        toDoWrap.classList.add("is-active");
+    }
+
     saveToDos();
 }
 
@@ -65,5 +74,6 @@ if(savedToDos !== null){
     const parsedToDos = JSON.parse(savedToDos);
     toDos = parsedToDos;
     parsedToDos.forEach(paintToDo);
+    toDoWrap.classList.add("is-active");
 }
 

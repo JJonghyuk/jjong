@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Roboto:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -43,27 +43,21 @@ button{cursor:pointer;margin:0;padding:0;background:none;border:0;}
 input,
 select{-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearance:none;padding:0;margin:0;width:100%;border:1px solid transparent; font-family: 'Noto Sans KR';box-sizing: border-box;}
 
+.roboto-light {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+  
 .roboto-regular {
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
   
-.roboto-medium {
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-}
-  
 .roboto-bold {
     font-family: "Roboto", sans-serif;
     font-weight: 700;
-    font-style: normal;
-}
-  
-.roboto-black {
-    font-family: "Roboto", sans-serif;
-    font-weight: 900;
     font-style: normal;
 }
 
@@ -214,7 +208,7 @@ select{-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearan
     color:#fff;
     font-size: 14px;
     font-weight: 300;
-    text-shadow:0 2px 2px #000;
+    text-shadow:0 2px 3px #000;
 }
 
 .author{
@@ -231,7 +225,6 @@ select{-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearan
 .city{
     color:#fff;
     font-size: 14px;
-    font-weight: 300;
 }
 .weather + .city{
     margin-left:10px;
