@@ -137,6 +137,17 @@ select{-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearan
     padding-top:10px;
     max-height: calc(100vh - 65vh);
 }
+#todo-list::-webkit-scrollbar {
+    width: 6px;
+}
+#todo-list::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 20px;
+}
+#todo-list::-webkit-scrollbar-track {
+    background: #fff;
+}
+
 
 .todo-item{
     position: relative;
