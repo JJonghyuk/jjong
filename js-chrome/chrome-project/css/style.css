@@ -65,7 +65,7 @@ select{-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearan
 .wrap{
     position: relative;
     margin: 0 auto;
-    max-width: 1920px;
+    max-width: 2560px;
     height: 100vh;
 }
 
