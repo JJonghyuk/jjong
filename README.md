@@ -1,5 +1,5 @@
 # jjong
-종혁 연습
+박종혁_Project
 
 
 https://jjonghyuk.github.io/jjong/chrome-project/index.html
