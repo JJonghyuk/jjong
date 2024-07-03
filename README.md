@@ -1,7 +1,7 @@
 # jjong
-종혁 연습
+박종혁_Project
 
 
-https://jjonghyuk.github.io/jjong/project/chrome-project/index.html
+https://jjonghyuk.github.io/jjong/chrome-project/index.html
 
-https://jjonghyuk.github.io/jjong/project/youtube-clone-project/index.html
+https://jjonghyuk.github.io/jjong/youtube-clone-project/index.html
