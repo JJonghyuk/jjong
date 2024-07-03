@@ -1,0 +1,27 @@
+{
+  "name": "wetube",
+  "version": "1.0.0",
+  "description": "The best way to watch videos.",
+  "repository": {
+    "type": "git",
+    "url": "https://jjonghyuk.github.io/jjong/project/youtube-clone-project"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js"
+  },
+  "author": "Park Jong Hyuk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://jjonghyuk.github.io/jjong/project/youtube-clone-project/issues"
+  },
+  "homepage": "https://jjonghyuk.github.io/jjong/project/youtube-clone-project",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/node": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "nodemon": "^3.1.4"
+  }
+}

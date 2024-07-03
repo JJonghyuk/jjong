@@ -1,0 +1,13 @@
+body{
+    background: beige;
+}
+
+.title-h1{
+    color:blue;
+}
+.title-h1.clicked{
+    color:tomato;
+}
+
+
+
