@@ -61,7 +61,7 @@
 // 코드가 획실하게 동작한 다는 뜻으로 fresh라는 패키지의 0.5.2 버전을 설치한다고 해보면, 말 그래도 딱 그 버전이 설치되면서 debug, encodeurl, statuses도 딱 그 버전으로 설치되면서 관리할 필요가 없어진다.npm이 알아서 처리해주기 때문이다.
 // dependencies가 있기 때문에 npm i하면 알아서 dependencies에 해당 모듈을 설치하면서 node_modules 폴더가 굳이 github에 필요없으므로 .gitignore를 설정해서 /node_modules를 넣어주자. 
 // package.json이 열려있고 뭔가 수정을 했는데 저장을 하지 않은 상태에서 npm i express를 수정하면 npm이 package.json의 dependencies를 수정하는데 저장을 안해씩 때문에 버전이 충돌하면서 npm install 할 때는 package.json을 꼭 닫고 실행해야 한다. npm이 자동으로 package.json을 수정한다. 
-// 지금은 dependencies가 프로젝트를 구동시키는 데 필요한 모듈들이란 것만 잘 기억하면 된다. 다른 사람들한테 node_modules 폴더를 보낼 필요가 없다. 그냥 이 파일만 가지고 npm i을 하면 npm이 dependencies에 있는 모든 것들을 설치해준다. 
+// 지금은 dependencies가 프로젝트를 구동시키는 데 필요한 모듈들이란 것만 잘 기억하면 된다. 다른 사람들한테 node_modules 폴더를 보낼 필요가 없다. 그냥 이 파일만 가지고 'npm i'을 하면 npm이 dependencies에 있는 모든 것들을 설치해준다. 
 
 // #2.3
 // NodeJS에서 필요한 babel설치
@@ -105,6 +105,7 @@
 // app.listen() <-- callback 함수가 있음 port 넘버를 설정하며, 서버가 실행 됬을때 실행되는 함수를 넣어준다.
 //  - ex) app.listen(4000, handleListening);
 // *port --> 윈도우의 문이나 창문 같은 역할
+//  - port = 4000 사용하는거는 백엔드 관습, 숫자가 높아질수록 사용하지 않는 포트가 많아짐
 
 // #3.1
 // Cnnnot GET / --> / 이거는 '페이지'를 말하는거 ex) google.com === google.com/
@@ -131,10 +132,27 @@
 // ex) handleClick({...},{...}) 풀어 쓰면은 --> handleClick(request object, response object)가 들어간다
 
 // 브라우저가 request(요청) 하고서, 끝내는 방법 중에는 res.end(), res.send()를 사용하여 마무리 지을수 있음.
+// * const handleClick = (req, res) => res.end(); --> {} 없는 한줄 사용은 return이 내포되어 있어, return이 없어도 가능하다.
 // ex) const handleClick = (req, res) => {
 //   1. return res.end();  
 //   2. return res.send("I still love you");  
+//   3. return res.send("<h1>love you</h1>>");  
 //  }
+
+// #3.5
+// middleware --> 중간에 있는 소프트웨어 / request & response 사이에 있는것
+//  - (req, res, next) 함수 3개 필요 next 함수를 사용함(middleware가 아닌 마지막 함수는 next() 함수 사용x)
+//  - 다음 함수로 넘기는 함수
+// middleware = controller
+//  - ex) const handleClick = (req, res, next) --> next라는 함수가 있는데, 함수가 끝나고 next() 함수를 실행해주는거다. 
+//  - ex) app.get("/", handleHome, next가 실행할 함수들)
+// middleware 
+
+// #3.6
+// app.use() = global middleware를 만들수 있게 해줌, 어느 URL에서도 작동할수 있음
+//  - ex) app.use(함수이름)
+//  - use() --> get() 순서대로 해야 함
+//  - use()인 middleware를 사용하면 모든 route(페이지)에서 실행됨
 
 
 // ------------------------------- //#3 INTRODUCTION TO EXPRESS -------------------------------
