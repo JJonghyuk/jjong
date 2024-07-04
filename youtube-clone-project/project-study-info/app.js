@@ -108,16 +108,22 @@
 //  - port = 4000 사용하는거는 백엔드 관습, 숫자가 높아질수록 사용하지 않는 포트가 많아짐
 
 // #3.1
-// Cnnnot GET / --> / 이거는 '페이지'를 말하는거 ex) google.com === google.com/
+// Cannot GET / --> / 이거는 '페이지'를 말하는거 ex) google.com === google.com/
 // GET = HTTP method (get this page) 
-// http === 서버와 소통하는 방법
+// http는 서버와 소통하는 방식이다
 // 브라우저는 나를 대신해서 웹사이트를 request(요청)하고, 페이지를 가져다 주는것
+// - '/'는 root를 의미한다.
+// - get은 http method다.
+// - http는 우리가 서버와 소통하는 방식이다.
+// - http request는 말하자면 웹사이트에 접속하고 서버에 정보를 보내는 방법이다.
+// - 웹사이트를 접속할 떄 브라우저가 나를 데려오는게 아니다 브라우저가 나를 대신하여 웹사이트를 request하고 페이지를 가져다 주는 것이다.
+// - 즉 get은 페이지를 가져오란 뜻이다.
 
 // #3.2
 // const app = express();
 //  --> express() 선언하고 다음 그 밑으로 코드를 작성해야함
-// * request --> 브라우저가 get request를 보내는거(get request네는 route가 있음) / 유저가 뭔가를 요청하거나, 보내거나, 네게 무슨 행동을 한다, 누군가가 무언가를 달라고 하는것
-// app.get("/",() => ) --> "/"(root page로 get request를 보냄), 함수를 호출 하는건데 function()이 꼭 들어가야함.
+// * request --> 브라우저가 get request를 보내는거(get request네는 route가 있음) / 유저가 뭔가를 요청하거나, 보내거나, 네게 무슨 행동을 한다, 누군가가 무언가를 달라고 하는것, 사용자가 요청하는거에 대한 정보, 서버에서 데이터를 가져오고자 요청 하는거
+// app.get(1."/",2.() => ) --> 1. "/" (root page로 get request를 보냄), 2. 함수를 호출 하는건데 function()이 꼭 들어가야함.
 
 // #3.3
 // app.get("/",() => ) ---> "/" > route 라고 함
@@ -140,25 +146,58 @@
 //  }
 
 // #3.5
-// middleware --> 중간에 있는 소프트웨어 / request & response 사이에 있는것
+// middleware --> 중간에 있는 소프트웨어 / request & response 사이에 있는것 / use(""), get("") 함수에서 사용 가능
 //  - (req, res, next) 함수 3개 필요 next 함수를 사용함(middleware가 아닌 마지막 함수는 next() 함수 사용x)
 //  - 다음 함수로 넘기는 함수
 // middleware = controller
 //  - ex) const handleClick = (req, res, next) --> next라는 함수가 있는데, 함수가 끝나고 next() 함수를 실행해주는거다. 
-//  - ex) app.get("/", handleHome, next가 실행할 함수들)
+//  - ex) app.get("/", next가 실행할 함수들, handleHome)
 // middleware 
 
 // #3.6
-// app.use() = global middleware를 만들수 있게 해줌, 어느 URL에서도 작동할수 있음
+// app.use() = *global middleware를 만들수 있게 해줌, *어느 URL에서도 작동할수 있음
 //  - ex) app.use(함수이름)
 //  - use() --> get() 순서대로 해야 함
 //  - use()인 middleware를 사용하면 모든 route(페이지)에서 실행됨
+// * ex) middleware 를 직접 만든거
+
+// const logger = (req, res, next) => {
+//   console.log(`${req.method} ${req.url}`)
+//   next();
+// }
+
+// const privateMiddleware = (req, res, next) =>{
+//   const url = req.url;
+//   if(url === "/protected"){
+//     return res.send("<h1>Not Allowed</h1>");
+//   }
+//   next();
+// }
+
+// app.use(logger);
+// app.use(privateMiddleware)
+
+
+// # 3.11
+// * npm i morgan / morgan = middleware / morgan 이 더 정교하다 -->
+//   - morgan("dev") - GET, Path, Status code, 응답시간을 콘솔 로그로 보여준다.
+// * morgan(" ") --> combined, common, dev, short, tiny 설정하는 함수값에 따라 출력 되는 로그 값이 다름.
+// morgan 패키지는 node.js 서버로 구성된 웹 환경에서 HTTP request 로그를 관리하기 위한 미들웨어이다.
+// - morgan은 node.js용 request logger middleware다.
+// - morgan 함수는 middleware 를 return 해준다.
+// - morgan 함수를 불러오면 5개의 옵션이 있다.
+// - morgan은 우리가 만든 logger 함수보다 정교하다. (GET, path, status code, 등 모든 정보를 갖고 있다.)
 
 
 // ------------------------------- //#3 INTRODUCTION TO EXPRESS -------------------------------
 
 
 // ------------------------------- #4 ROUTERS -------------------------------
+
+// # 4.0
+
+
+
 
 
 
