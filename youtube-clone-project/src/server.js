@@ -9,12 +9,11 @@ const logger = (req, res, next) => {
   next();
 }
 
-const pr = (req, res, next) =>{
+const privateMiddleware = (req, res, next) =>{
   const url = req.url;
-  if(url === "/pr"){
-    return res.send("ggg");
+  if(url === "/protected"){
+    return res.send("<h1>Not Allowed</h1>");
   }
-  console.log("hhhhh");
   next();
 }
 
@@ -23,15 +22,15 @@ const handleHome = (req,res) => {
 };
 
 
-const handleerr = (req,res) => {
-  return res.send("rrrrr")
+const handleProtected = (req,res) => {
+  return res.send("Welcome to the private lounge.")
 };
 
 app.use(logger);
-app.use(pr)
+app.use(privateMiddleware)
 
 app.get("/", handleHome);
-app.get("/pr",handleerr);
+app.get("/protected",handleProtected);
 
 const handleListening = () => console.log(`server listening on port http://localhost:${PORT}`);
 
