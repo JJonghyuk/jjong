@@ -140,10 +140,23 @@
 // 브라우저가 request(요청) 하고서, 끝내는 방법 중에는 res.end(), res.send()를 사용하여 마무리 지을수 있음.
 // * const handleClick = (req, res) => res.end(); --> {} 없는 한줄 사용은 return이 내포되어 있어, return이 없어도 가능하다.
 // ex) const handleClick = (req, res) => {
-//   1. return res.end();  
-//   2. return res.send("I still love you");  
+//   1. return res.end();  --> end는 바로종료
+//   2. return res.send("I still love you");  --> send는 추가하고 종료
 //   3. return res.send("<h1>love you</h1>>");  
 //  }
+
+// const handleHome = (req,res) => {
+//   return res.send("I still love you")
+// };
+
+// const handleProtected = (req,res) => {
+//   return res.send("Welcome to the private lounge.")
+// };
+
+// app.use(logger);
+// app.get("/", handleHome);
+// app.get("/protected",handleProtected);
+
 
 // #3.5
 // middleware --> 중간에 있는 소프트웨어 / request & response 사이에 있는것 / use(""), get("") 함수에서 사용 가능
@@ -156,7 +169,7 @@
 
 // #3.6
 // app.use() = *global middleware를 만들수 있게 해줌, *어느 URL에서도 작동할수 있음
-//  - ex) app.use(함수이름)
+//  - ex) app.use()
 //  - use() --> get() 순서대로 해야 함
 //  - use()인 middleware를 사용하면 모든 route(페이지)에서 실행됨
 // * ex) middleware 를 직접 만든거
@@ -195,12 +208,105 @@
 // ------------------------------- #4 ROUTERS -------------------------------
 
 // # 4.0
+// *router --> 미니 어플리케이션
+// router = handler나 url을 좀 더 관리하기 쉽게 해주는 기능
+//  - 작업중인 주체를 기반으로 URL을 그룹화해준다.
+//  - ex) /users/edit, /users/delete etc ...
+//  - /videos/edit, /videos/delete etc...
+//  라우터를 만들기 전에 플랜을 적어두고, 가장 좋은 방법은 직접 만들어보고 프로젝트에 적용해보는거, 어떤 종류의 데이터를  이용할것인가 ex) Wetube -> 유저, 동영상 두개의 데이터
 
+// # Wetube Reloaded --> 라우터
 
+// - 글로벌 라우터 -
+// / -> Home
+// /join -> join
+// /login -> login
+// /search -> search
+// - 글로벌 라우터 -
 
+// /users/edit -> Edit user
+// /users/delete -> Delete user
 
+// /videos/watch -> Watch Video
+// /videos/edit -> Edit Video
+// /videos/delete -> Delete Video
+// /videos/comments -> Comment on a video
+// /videos/comments/delete -> Delete A Comment of a Video
 
+// Router
+// 모든 Express 애플리케이션에는 앱 라우터가 내장되어 있습니다.
+// 라우터는 미들웨어 자체처럼 작동하므로 app.use()에 대한 인수로 또는 다른 라우터의 use() 메서드에 대한 인수로 사용할 수 있습니다.
+// 최상위 익스프레스 객체에는 새로운 라우터 객체를 생성하는 Router() 메서드가 있습니다.
+// https://expressjs.com/ko/4x/api.html#router
 
+// # 4.2 ~ 4.3
+// *각 라우터 js에서 다른 js에 변수,함수,객체,원시 등을 넘겨주기 위해서는 export를 한다
+
+// * export default 함수명; --> 사용하여 넘겨준다
+//  - 모듈에서 하나의 값만 export한다면 default 키워드를 사용할 수 있다.
+//  - default 키워드를 사용하는 경우 하나의 값을 export 한다
+//  - export default로 모듈을 내보낸다면 export한 이름과 상관없이 원하는 이름으로 import가 가능하다.
+
+// * export
+// 한 모듈 안에 여러 가지를 export하는 경우에는 export
+// * 변수, 함수, 클래스를 하나의 객체로 구성하여 export
+//   - export {name, sayHello, Person};
+//   - export const name = ""; 
+
+// * import시 모듈이 export한 이름으로 import해야 한다. (함수명과 동일하게 사용 해야함)
+//  - const name = ""; --> name 이라는 함수명과 import 하는 함수명이 동일해야 하며, {} 안에 객체로 넣어줘야함
+//  - import {name, sayHello, Person} from './test.js'
+//  - import * as test from './test.js'
+//  - import {name as myName, sayHello(), Person} from './test.js'
+
+// - import {name, sayHello, Person} from './test.js' 여기서 . <-- 하나 찍는 이유
+// * 상대 경로 (Relative Path):
+// .: 현재 디렉토리
+// ..: 부모 디렉토리
+// 예시: ./module.js, ../module.js
+// 상대 경로를 사용하면 현재 파일의 위치를 기준으로 다른 파일을 가져올 수 있습니다. 예를 들어, 현재 파일과 동일한 디렉토리에 있는 module.js 파일을 가져오려면 다음과 같이 작성합니다:
+
+// # 4.7
+// ex) userRouter.get("/:id", seeUser);
+// : --> 파라미터라고 한다.
+// * url 안에 변수를 포함시킬 수 있게 해준다.
+// 변수 url를 만들거면은 필수로 ' : '<-- 가 들억가 줘야 한다.
+// /:id --> url에 변수값을 넣어 줄 수 있게 해준다
+// id --> 변수명
+// : --> /:id id가 변수라고 인식하게 해줌
+// express는 리퀘스트 오브젝트에 이 파라미터를 보내준다.
+
+// ex)
+// videoRouter.get("/upload", upload) <--- **
+// videoRouter.get("/:id", see)
+// videoRouter.get("/:id/edit", edit)
+// * 여기서 /upload를 위에 쓴 이유
+//   respond 를 받아올때 /:id 의 변수 중 하나라고 인식하기 때문이다
+
+// # 4.8
+// express 라우팅 --> ex) (/ab*cd) --> ab 와 cd 사이에 아무거나 들어와 도 된다.
+// * 정규식 --> 문자열로부터 특정 정보를 추출해내는 방법, 정규식은 모든 프로그래밍 언어에 존재
+// * --> 아무거나 포함
+// ? --> 선택사항 ()? - 괄호안에 있는 내용을 선택해서 넣어도 되고 안넣어도 되고
+// + --> ab+c 라고 하면 abc, abbc, abbbc 등 b 를 여러개 가능
+
+// ex) 숫자만 url에 들어간 주소에만 함수 실행하고 싶을때
+// videoRouter.get("/upload", upload)
+// videoRouter.get("/:id(\\d+)", see)
+// videoRouter.get("/:id(\\d+)/edit", edit)
+// videoRouter.get("/:id(\\d+)/delete", deleteVideo)
+// **
+// :id(\\d+) --> id를 붙인 이유는 이름을 붙이기 위해서 (컨트롤러에서 필요)
+// req.params.id --> 이런식으로 이름을 붙여서 사용 하기 위해
+
+// Routing
+// https://expressjs.com/ko/guide/routing.html
+
+// 정규표현식 테스트 사이트
+// https://www.regexpal.com
+
+// \w+: 모든 문자, 숫자 선택
+// \d+: 모든 숫자 선택
 
 
 // ------------------------------- //#4 ROUTERS -------------------------------
