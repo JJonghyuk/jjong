@@ -316,6 +316,58 @@
 // ------------------------------- #5 TEMPLATES -------------------------------
 
 
+// # 5.1
+// ** Pug **
+// Pug는 Haml의 영향을 많이 받은, Node.js 및 브라우저용 JavaScript로 구현된 고성능 템플릿 엔진입니다. Pug는 이전에 "Jade"로 알려졌습니다. 그러나 "Jade"가 등록상표임이 밝혀져 이름을 변경했습니다.
+// npm i pug
+// https://www.npmjs.com/package/pug
+
+// Express와 함께 템플리트 엔진을 사용
+// Express가 템플리트를 렌더링하려면 다음과 같은 애플리케이션 설정이 필요합니다.
+// views, 템플리트가 있는 디렉토리. 예: app.set('views', './views')
+// * view engine, 사용할 템플리트 엔진. 예: app.set('view engine', 'pug')
+// https://expressjs.com/ko/guide/using-template-engines.html
+
+// Application Settings (Express어플리케이션 설정)
+// https://expressjs.com/ko/4x/api.html#app.use
+
+// 헤더에서 Express를 없애는 방법:
+// app.disable('x-powered-by');
+
+// console.log(process.cwd()) --> process.cwd() 현재 작업중인 디렉토리를 콘솔로그로 출력해줌
+// * 현재 디렉토리가 파일 위치와 다른 이유는 node.js를 실행하는 package.json위치를 기준으로 잡고 있어서 코딩 하는 파일 위치와 다른 것
+// app.set("view engine", "pug"); --> pug 템플리트 설정
+// app.set("views", process.cwd() + "/src/views"); --> 템플리트 경로 설정
+// res.render("watch"); --> render 속성으로 ("파일명") 파일명과 동일한 이름으로 넣어준다.
+
+// # 5.2
+// 랜더하는 파일명은 소문자여야 하고, 띄어쓰기를 사용하지 않는다!
+// pug 파일에서 자바스크립트를  #{} (변수 사용)를 사용하여 사용할 수 있다. ex) #{new Date().getFullYear()}
+// 자바스크립트 코드는 유저가 보기전에 평범한 텍스트로 변환된다 그게 '렌더링' 이라고 한다.
+// include --> 다른 파일을 포함 시킬수 있다.
+
+// # 5.3
+// inheritance --> 상속 개념으로 베이스를 만들어준다. 레이아웃, html 등의 베이스라고 한다.
+//  ex) layout.pug / base.pug 
+// * extends(확장) --> ex) extends base.pug
+// * block --> 템플릿의 창문, 문 같은거, 무언가를 집어 넣을수 있는 공간
+// ex) block content --> 블럭을 넣을 곳에 'block content' 라고 작성한다.(content 변수는 다르게 써도 무방)
+//     block content
+//      h1 watch video  --> 이렇게 2줄로 작업하여 수정한다
+// 속성인 () 괄호 안에 선언한다
+// ex) link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+
+// # 5.4
+// pug를 렌더링해주는건 controller!
+// render("")는 2개의 argument를 받는다. --> ex) render("home",{pageTitle: "Home", potato: "tomato"})
+//  1. 하나는 view --> "home"
+//  2. 다른 하나는 템플릿에 보낼 변수! --> {pageTitle: "Home"}
+// ** 템플릿에 변수를 생성하는법 #{} --> ex) title #{pageTitle} | Wetube 
+
+// # 5.6
+// MVP CSS --> 기본 style 잡아줌
+//  - link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+
 
 
 
