@@ -295,8 +295,9 @@
 // videoRouter.get("/:id(\\d+)", see)
 // videoRouter.get("/:id(\\d+)/edit", edit)
 // videoRouter.get("/:id(\\d+)/delete", deleteVideo)
-// **
-// :id(\\d+) --> id를 붙인 이유는 이름을 붙이기 위해서 (컨트롤러에서 필요)
+// (\\d+) --> 하나 이상의 연속된 숫자를 찾아서 캡처 그룹으로 묶는 정규식
+// ** 
+// **** :id(\\d+) --> id를 붙인 이유는 이름을 붙이기 위해서 (컨트롤러에서 필요)
 // req.params.id --> 이런식으로 이름을 붙여서 사용 하기 위해
 
 // Routing
@@ -343,6 +344,7 @@
 // # 5.2
 // 랜더하는 파일명은 소문자여야 하고, 띄어쓰기를 사용하지 않는다!
 // pug 파일에서 자바스크립트를  #{} (변수 사용)를 사용하여 사용할 수 있다. ex) #{new Date().getFullYear()}
+// * 속성에는 #{}를 사용할 수 없다. 속성에는 `${}` 백틱을 사용해야 한다
 // 자바스크립트 코드는 유저가 보기전에 평범한 텍스트로 변환된다 그게 '렌더링' 이라고 한다.
 // include --> 다른 파일을 포함 시킬수 있다.
 
@@ -351,7 +353,9 @@
 //  ex) layout.pug / base.pug 
 // * extends(확장) --> ex) extends base.pug
 // * block --> 템플릿의 창문, 문 같은거, 무언가를 집어 넣을수 있는 공간
+
 // ex) block content --> 블럭을 넣을 곳에 'block content' 라고 작성한다.(content 변수는 다르게 써도 무방)
+
 //     block content
 //      h1 watch video  --> 이렇게 2줄로 작업하여 수정한다
 // 속성인 () 괄호 안에 선언한다
@@ -369,7 +373,77 @@
 //  - link(rel="stylesheet" href="https://unpkg.com/mvp.css")
 
 
+// # 5.7
+// * =변수명 --> 이렇게 적는 이유는 하나의 텍스트를 변수로 보여줌(다른 텍스트와 섞지 않음)
+// ex) h1=pageTitle , h1 #{pageTitle} 이거 두개는 같지만 #{} 붙이는거는 다른 텍스트와 섞어서 사용할 수 있음 
+// * 객체 리터럴 축약속성(es6) --> 객체를 정의할 때 속성의 이름과 변수의 이름이 같으면, 속성 값을 할당할 때 name: name 대신 name으로 축약할 수 있습니다.
+// ex) 변수명:변수명 === 변수 같음
+// ES5 방식)
+// const person1 = {
+//   name: name,
+//   age: age
+// };
 
+// // ES6 방식 (축약 속성 사용)
+// const person2 = {
+//   name,
+//   age
+// };
+
+// * Conditionals (조건문)
+// if fakeUser.loggedIn
+// li
+//   a(href="/logout") Log out 
+// else
+// li 
+//   a(href="/login") Login
+
+
+// # 5.8
+// * Iteration (반복문) --> '아이템' 변수를 지정, '아이템들 변수' 객체를 변수로 선언한 변수명
+//  --> each '아이템(단수)' in '아이템들 변수(복수) --> list 여야 한다.(Array 배열)'
+//       li='아이템'
+// --> * pug 에서는 each 문에서 if문 처럼 else를 사용할수 있다. *
+// each 문의 리스트(배열)값이 빈값 이거나 length가 0 이면 else를 실행 시킴
+
+// ex)
+// const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];  
+// return res.render("home", {pageTitle:"home",videos})
+//     ES5 <-- videos:videos === videos --> ES6(축약 속성 사용)
+// return res.render("home", {pageTitle:"home",videos:videos})
+
+//    ul
+//      each video in videos
+//        ll=video
+
+
+// ex)
+// const videos = [
+//  {
+//    title: "hello"
+//  },
+//  {
+//    title: "video #2"
+//  },
+// ];  
+// return res.render("home", {pageTitle:"home",videos})
+
+//    ul
+//      each video in videos
+//        ll=video.title
+//      else
+//        Sorry nothing found.
+
+
+// # 5.9
+// * mixin --> 데이터를 받을 수 있는 partial, mixin은 똑똑한 partial 이다.
+// * mixin 에서는 +mixin변수명(인자값) 이렇게 선언할수 있다.
+// * mixin을 파일을 다시 include 해서 연결 시켜줘야 한다.
+//   - ex) include mixins/video
+
+// - ex)
+//  each potato in videos
+//    +video(potato)
 
 // ------------------------------- //#5 TEMPLATES -------------------------------
 
@@ -377,6 +451,12 @@
 
 
 // ------------------------------- #6 MONGODB AND MONGOOSE -------------------------------
+
+// # 6.0
+// #{}는 텍스트에 사용하며 속성에는 사용할수 없음, 속성에서 사용할려면 `${}` 백틱을 사용해야 함.
+// const id = req.params.id; === const { id } = req.params; --> ES6 문법
+
+
 
 
 
