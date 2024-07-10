@@ -38,10 +38,8 @@ export const getEdit = (req, res) => {
   return res.render("edit",{ pageTitle: `Editing ${video.title}`, video });
 }
 export const postEdit = (req, res) => {
-  console.log(req.body)
   const { id } = req.params;
   const { title } = req.body;
-  console.log(title);
   videos[id - 1].title = title;
   return res.redirect(`/videos/${id}`);
 }
