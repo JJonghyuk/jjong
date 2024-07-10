@@ -456,10 +456,51 @@
 // #{}는 텍스트에 사용하며 속성에는 사용할수 없음, 속성에서 사용할려면 `${}` 백틱을 사용해야 함.
 // const id = req.params.id; === const { id } = req.params; --> ES6 문법
 
+// # 6.1
+// URL
+// * url 설정 제일앞에 / 가있으면 절대경로(absolute), 없으면 상대경로(relative)로 현재 url에서 뒤에 주소가 붙는다.
+//  현재 나의 url - localhost:4000/videos
+//  - a(href="/edit") ---> localhost:4000/edit
+//  - a(href="edit") ---> localhost:4000/videos/edit
+//  - a(href=`${video.id}/edit`) ---> localhost:4000/videos/1/edit
 
+// # 6.2
+// form - action="" 속성 (데이터를 전송을 위한 값), (기본값은 현재 url)
+//  - action은 너가 가게될 서버 주소이다. 그 값은 url이 된다.
+//  - 너의 서버가 가져야 하는 url, url 값
+//  - 값 작성시 지정된 url로 값이 들어감
+// form - method="" 속성  (기본 GET)
+//  - 서버로 전송하는 방법을 지정해주는 속성
+//  - GET, POST 두개의 속성 값이 있음
+//  - GET --> 파라미터가 주소창에 나오는 방식(눈으로 확인 가능)
+//    --> input 등 name 값도 같이 url에 입력 되어짐
+//    ex) input name="nameTitle" -> url : 액션 값?nameTitle=인풋의 밸류값
+//  - POST --> HTTP 프로토콜의 body에 파라미터가 넘어가는 방식(눈에 보이지 않아 보안성이 유지됨)
+//    --> 파일을 보내거나, database에 있는 값을 바꾸는 값을 보낼때 사용.
+//    --> 로그인, 회원가입, 글 작성, 파일 업로드 페이지 등에 주로 사용됨.
 
+// # 6.3
+// router에서 get(),post()를 두줄이 아닌 한줄로 사용하기 위한 방법 --> route() 사용
+// ex) 두개
+//  - 변수명.route("url 주소").get(함수명).post(함수명);
+// redirect() --> 브라우저가 redirect(자동으로 이동) 하도록 하는것
 
+// get - 접근
+// post - 전송
+// redirect - 다시보내다
+// parameter - 매개변수
+// express는 form으로 보낸 데이터를 읽지못함
 
+// ** req.body
+//  - req.body에는 form을 통해 submit된 데이터의 키-값 을 쌍으로 포함합니다.
+//  - 기본적으로는 undefined이며 express.json() 또는 express.urlencoded()와 같은 바디 파싱 미들웨어를 사용할 때 값을 받아옵니다.
+//  - input에 name 속성 값이 없으면 req.body 데이터를 받아오지 못함.
+//  - input의 name 값이 title 일 경우에 --> req.body.title 또는 { title } = req.body 라고 선언 가능
+// routes를 사용하기 전에 middleware를 사용해야 함
+// middleware -> form 을 해석하고 -> 자바스크립트로 변형 시켜 사용 할수 있게 되는거
+// ex)
+//  - app.use(express.urlencoded({extended: true}))
+//    --> express application가 form의 value들을 이해할 수 있도록 하고, 자바스크립트로 변형 시켜줌
 
 
 // ------------------------------- //#6 MONGODB AND MONGOOSE -------------------------------
