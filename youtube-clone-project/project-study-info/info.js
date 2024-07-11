@@ -502,6 +502,48 @@
 //  - app.use(express.urlencoded({extended: true}))
 //    --> express application가 form의 value들을 이해할 수 있도록 하고, 자바스크립트로 변형 시켜줌
 
+// # 6.7
+// MongoDB --> document-based(문서 기반)
+// MongoDB 다운로드 사이트
+// https://docs.mongodb.com/manual/installation
+
+
+// # 6.8
+// Mongoose --> node.js와 MongoDB를 이어주는 다리
+//  - 터미널에서 mongod 명령어 입력하여 설치가 잘되어 있는지 확인
+//  - mongodb 실행방법 
+//    터미널 -> brew services start mongodb-community@7.0 -> mongod -> mongosh
+// Event 차이점
+// * on --> 여러번 계속 실행시킬 수 있다. (클릭 이벤트 같은 거)
+// * once --> 오로지 한번만 실행 됨.
+//
+// 페이지에서 생성, 편집, 읽기, 삭제 하는 방식윽 CRUD 라고 한다
+// C - Create(생성)
+// R - Read(읽기)
+// U - Update(수정)
+// D - Delete(삭제)
+
+// # 6.10
+// * model의 형태를 정의 할때 Schema(데이터베이스의 구조와 제약조건에 관해 전반적인 명세를 기술한 것)라고 한다.
+//  - 개체의 특성을 나타내는 속성(Attribute)과, 속성들의 집합으로 이루어진 개체(Entity), 그리고 개체 사이에 존재하는 관계(Relation)에 대한 정의를 포함하여, 이들이 지켜야 할 제약 조건을 기술한 것.
+//  - 물리적인 장치로부터 논리적인 데이터 베이스 레코드(data base record)를 매핑(mapping)하는 데 사용되는 정의 정보를 말한다. 즉 쿠키틀 이라고 보면 될거같네요..!
+
+// ex)
+//   - 데이터의 형식과 형태가 어떻게 구성 될지 잡아주는거, 테이터의 형식을 정의
+// const videoSchema = new mongoose.Schema({
+//   title: String,
+//   description: String,
+//   createdAt: Date,
+//   hashtags: [{ type : String}],
+//   meta: {
+//     views :Number,
+//     rating :Number,
+//   },
+// })
+//   - model 이름과, 테이터의 형태인 schema를 설정
+// const Video = mongoose.model("Video", videoSchema);
+
+
 
 // ------------------------------- //#6 MONGODB AND MONGOOSE -------------------------------
 
