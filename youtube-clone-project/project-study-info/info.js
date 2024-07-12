@@ -1,3 +1,4 @@
+/*
 // ------------------------------- Youtube-clone-project -------------------------------
 
 
@@ -542,6 +543,69 @@
 // })
 //   - model 이름과, 테이터의 형태인 schema를 설정
 // const Video = mongoose.model("Video", videoSchema);
+// * String.split() ---> split() 단어를 지정된것으로 지정할시 단어 별로 배열을 만들어 낸다.
+// ex) genres.split(",") 일시에 , 를 기준으로 단어를 끊어 배열로 지정함.
+
+// # 6.11 ~ 12
+// --- Mongoose 6.0 버전 이상에서는 Model.find() 함수가 더 이상 콜백 함수를 지원하지 않습니다. ---
+//  database 는 javascript 밖에 존재하기 때문에 여러가지 상황이 발생할 수 있어, 기다림이 필요함
+//  * mongoose의 model에 find()는 두가지 사용 방식이 있다.
+//      - callback 함수, promise
+//  * callback --> 무언가가 발생하고 난 다음 호출 되는 function
+//  ex) app.listen(PORT, handleListening); --> PORT 변수가 실행되고, handleListening 함수 호출
+//  * find(); --> mongoose에서 검색 함수
+//    - find({},) --> {} 중괄회안에 값이 비어 있으면 모든 형식을 찾는다는 뜻
+//    - find({},(err,document) => {}) --> (err,document) err,document를 수신하는 function이 생기는데 안에 값은
+//      이름은 바꿔도 상관 없음 > (error,videos)
+//    ex) 
+//    const 이벤트 함수명 = { consol.log(error), console.log(document) }
+//    * find({},(err,document) => {}) = find({}, 이벤트 함수명) 두개는 같다
+//    req,res 보다 늦게 실행 됨                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+// # 6.13
+// * promise --> callback 함수와 다르게 실행 순서에 영향을 주지 않는다.
+// * async, await
+// try 실행 오류 시에 --> catch 실행
+// } catch(error) {
+    return res.render("server-error", {error})
+   } -->  처럼 error 메세지를 받을 수 있음.
+
+// callback function 의 장점은 에러들을 바로 볼 수 있다는것
+// 하지만 js의 단점은 기다리는 기능이 없어서 아무리 위에서 아래로 읽어도 database에서 불러오는 시간이 있어서 순서가 꼬인다 그래서 callback function을 썼었다.
+// 하지만 await,async가 생기면서 달라졌다!!
+
+// * await는 database에게 결과값을 받을때까지 js가 기다리게 해줄 수 있다..!!
+// * await,async의 장점은 매우 직관점이라는것 즉 js 가 어디서 어떻게 기다리는지 알 수 있다
+// * await는 규칙상 function이 async 상태일때만 안에서 사용 가능!
+// 하지만 callback function과 달리 promise방식은 error 가 어디서 오는지 명확하지가 않다
+// 그래서 try catch 방법을 쓴다
+// 말그대로 try 안에 있는 코드를 실행해보고 오류가 생기면 catch 안에 코드가 실행되는구조
+
+// 핵심 코드
+// video.find({}, (error, videos) => {
+//  if(error){
+//    return res.render("server-error")
+//  }
+//    return res.render("home")
+// });
+
+// ===same thing
+
+** promise **
+// export const home = async (req, res) => {
+//  try {
+//    const videos = await video.find({});
+//    return res.render("home", { pageTitle: "Home", videos });
+//  } catch {
+//    return res.render("server-error");
+//  }
+// };
+
+// # 6.14
+// 1. return의 역할 : 본질적인 return의 역할보다는 function을 마무리짓는 역할로 사용되고 있음.
+//  - 이러한 경우 return이 없어도 정상적으로 동작하지만 실수를 방지하기 위해 return을 사용
+// 2. render한 것은 다시 render할 수 없음
+//  - redirect(), sendStatus(), end() 등등 포함 (express에서 오류 발생)
 
 
 
@@ -683,3 +747,4 @@
 
 // ------------------------------- //Youtube-clone-project -------------------------------
 
+*/
