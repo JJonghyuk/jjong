@@ -563,8 +563,9 @@
 //    req,res 보다 늦게 실행 됨                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 
 // # 6.13
+// mongoDB 와 상호 작용 하기 위해 사용 --> callback(이제 사용x) / async, await 
 // * promise --> callback 함수와 다르게 실행 순서에 영향을 주지 않는다.
-// * async, await
+// * async, await 
 // try 실행 오류 시에 --> catch 실행
 // } catch(error) {
     return res.render("server-error", {error})
@@ -607,6 +608,63 @@
 // 2. render한 것은 다시 render할 수 없음
 //  - redirect(), sendStatus(), end() 등등 포함 (express에서 오류 발생)
 
+// # 6.15
+// map() --> 배열을 변환하거나 매핑할 때 유용하게 사용.
+// - map() 메서드는 배열의 각 요소에 대해 주어진 함수를 실행하고 그 결과를 모아서 새 배열을 반환합니다.
+// - 변환 함수는 각 요소에 대해 실행되며, 해당 요소를 수정하여 새로운 값을 반환합니다.
+// - map() 메서드는 기존 배열을 변경하지 않고 새 배열을 생성합니다.
+// - ES6의 화살표 함수를 사용하면 코드를 더 간결하게 작성할 수 있습니다.
+// ex) map((word) => `#{$word}`) --> #word 로 생성하여 반환함
+
+
+// # 6.16
+// 데이터 형태에 맞게 입력이 되지 않으면, 그 부분이 실행 되지 않음 ex) number -> 스트링 타입 넣으면 실행 x
+
+// ** 데이터베이스에 저장 하는 방법 2가지
+  1. Javascript object를 만들고 object를 database에 저장하는거
+
+    const video = new Video({
+      title,
+      description,
+      createdAt: Date.now(),
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      meta: {
+        views: 0,
+        rating: 0,
+      },
+    });
+    await video.save();
+  // * save()는 promise를 return 해준다. (save 작업이 끝날때 기다려 준다)
+
+  2. create를 사용하여 save를 안하고 손쉽게 database에 저장 가능
+
+    await Video.create({
+      title,
+      description,
+      createdAt: Date.now(),
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      meta: {
+        views: 0,
+        rating: 0,
+      },
+    });
+
+// MongoDB의 collection이름이 Video가 아닌 videos인 이유 (터미널에서 확인시 )
+// * mongosh 실행 후 - show dbs(wetube 데이터 저장된걸 확인할 수 있음) > use wetube > show collections(document 들의 묶음)
+// Mongoose는 자동으로 모델을 찾고, 해당 모델의 이름을 따서 소문자+뒤에 s(복수형)을 붙여 컬렉션을 생성합니다.
+// Tank 모델은 -> 컬렉션에 저장될 때, tanks로 저장됩니다.
+
+// Document.prototype.save()
+// https://mongoosejs.com/docs/api.html#document_Document-save
+
+// Model.create()
+// 하나 이상의 문서를 데이터베이스에 저장하기 위한 손쉬운 방법입니다.
+// MyModel.create(docs)는 문서의 모든 문서에 대해 새로운 MyModel(doc).save()를 수행합니다.
+// create()을 하게 되면 save()를 생략할 수 있습니다.
+// create()이 다음 미들웨어인 save()를 트리거하기 때문입니다.
+// https://mongoosejs.com/docs/api.html#model_Model.create
+
+// Collection: Document들을 담고 있는 묶음
 
 
 // ------------------------------- //#6 MONGODB AND MONGOOSE -------------------------------
