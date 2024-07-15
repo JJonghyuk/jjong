@@ -525,6 +525,7 @@
 // D - Delete(삭제)
 
 // # 6.10
+// * mongoDB에서는 _ID를 자동으로 생성해준다! --> mongoose에서 _ID를 string으로 변환해서 id를 만들어줌
 // * model의 형태를 정의 할때 Schema(데이터베이스의 구조와 제약조건에 관해 전반적인 명세를 기술한 것)라고 한다.
 //  - 개체의 특성을 나타내는 속성(Attribute)과, 속성들의 집합으로 이루어진 개체(Entity), 그리고 개체 사이에 존재하는 관계(Relation)에 대한 정의를 포함하여, 이들이 지켜야 할 제약 조건을 기술한 것.
 //  - 물리적인 장치로부터 논리적인 데이터 베이스 레코드(data base record)를 매핑(mapping)하는 데 사용되는 정의 정보를 말한다. 즉 쿠키틀 이라고 보면 될거같네요..!
@@ -560,7 +561,7 @@
 //    ex) 
 //    const 이벤트 함수명 = { consol.log(error), console.log(document) }
 //    * find({},(err,document) => {}) = find({}, 이벤트 함수명) 두개는 같다
-//    req,res 보다 늦게 실행 됨                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+//    req,res 보다 늦게 실행 됨
 
 // # 6.13
 // mongoDB 와 상호 작용 하기 위해 사용 --> callback(이제 사용x) / async, await 
@@ -665,6 +666,88 @@
 // https://mongoosejs.com/docs/api.html#model_Model.create
 
 // Collection: Document들을 담고 있는 묶음
+
+// # 6.17
+// try와 catch는 항상 같이 쓸것(참 실행 & 오류 실행), 같이 사용하지 않을시 오류가 있으면 무한 로딩이 걸림.
+// default: () 를 설정함으로써 기본값설정이 가능하다. (required: true 일 경우 값이 비면은 Error 이지만 default 할 경우 괜찮음)
+// required: true 를 설정함으로써 필수로 작성해야하는 칸을 설정해줄수 있다
+
+// # 6.18
+// 항상 강조하는것 데이터 타입을 구체화해서 적어라
+// 더 구체화 할수록 mongoose가 우릴 도와준다!
+
+// schema에서 string 타입
+// trim = 문자열 양 빈공간을 없애준다
+// minlength , maxlength -> form과 database측면 둘다 해줘야한다
+//  --> 사용자, 보안을 위해서(사용자 개발자 모드에서 삭제하여 비정상적으로 사용하는 걸 방지)
+
+// # 6.19
+// 정규식 연습할 수 있는 사이트 
+// - https://regex101.com/
+// 정규식에 대한 MDN의 공식 문서 
+// - https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Regular_Expressions
+
+// 몽고DB Document
+//  - 몽고DB는 ObjectID를 24바이트 16진 문자열 표현으로 반환한다.
+// https://mongodb.github.io/node-mongodb-native/api-bson-generated/objectid.html
+// https://docs.mongodb.com/manual/reference/method/ObjectId/
+
+// 십육진법 (Hexadecimal)
+//  - 십육진법은 십육을 밑으로 하는 기수법이다. 보통 0부터 9까지의 수와 A에서 F까지의 로마 문자를 사용하고, 이때 대소문자는 구별하지 않는다.
+// Hexadecimal: 0~9까지의 숫자와 A-F까지의 알파벳이 조합된 string
+
+// findOne
+//  - 해당 조건과 일치하는 document를 찾는다.
+//  - _id로 찾는 경우에는 findById()를 사용할 것을 권장
+//  - findById(id)는 거의* findOne({ _id: id })과 동일합니다.
+// https://mongoosejs.com/docs/api.html#model_Model.findOne
+
+// findById
+//  - 일치하는 ID를 찾아내는 기능
+// https://mongoosejs.com/docs/api.html#model_Model.findById
+
+// # 6.20
+// * 에러를 먼저 체크하여 코딩 해주어(if문) 나머지 코드는 에러 걱정 할 필요가 없으므로. (return 하는게 중요)
+// join()으로 배열을 문자열로 통합
+
+// # 6.21
+// * startWith() --> 어떤 특정 문자열로 시작하는지 확인 하는 함수
+// #이 중복되어도 하나로 변환시키고 싶을때
+// word.startsWith("#") ? `#${word.replace(/#/g, "")}` : `#${word}`
+// /#에 /g 라는 글로벌 정규식을 추가하면 ####okokok 일 때, 자동으로 #을 전부 없애주고, 하나의 #만 남기게 할 수 있다.
+// ex) hashtags: hashtags.split(",").map((word) => (word.startsWith("#") ? word : `#${word}`))
+
+// # 6.22
+// Edit 하는 방법 2가지 (첫번째 방법이 간결하고 쉬움)
+// await video.findByIdAndUpdate() --> findByIdAndUpdate()는 업데이트 하고자 하는 id를 찾고, 업데이트 할 내용을 적는다. (인자가 2개 필요)
+// 1. ex) 
+//  await Video.findByIdAndUpdate(id, {
+//    title,
+//    description,
+//    hashtags: hashtags.split(",").map((word) => (word.startsWith("#") ? word : `#${word}`)),
+//  });
+
+// 2. ex) 
+//  video.title = title;
+//  video.description = description;
+//  video.hashtags = hashtags.split(",").map((word) => (word.startsWith("#") ? word : `#${word}`)),
+//  await video.save();
+
+// node 모듈 mongoose를 활용해서 데이터를 생성하면,
+// _id를 자동으로 생성
+// 이 자동 생성된 _id에 접근할 때는 신기하게
+// ._id와 .id로 모두 접근이 가능
+// console.log(data.id);
+// console.log(data._id);
+// console.log(typeof(data.id)); -> string
+// console.log(typeof(data._id)); -> object
+// .id로 조회하면 string이 나오고, ._id로 조회하면 object가 반환
+
+// exists() / 존재하다 --> mongoose에서 사용하는 함수로 오브젝트가 존재하는지 확인 하는 필터로 값이 있을 경우 true를 반환 한다, 어떤 property도 필터가 가능하다
+ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우 true 반환
+
+
+
 
 
 // ------------------------------- //#6 MONGODB AND MONGOOSE -------------------------------
