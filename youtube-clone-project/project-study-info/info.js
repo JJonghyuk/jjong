@@ -746,8 +746,92 @@
 // exists() / 존재하다 --> mongoose에서 사용하는 함수로 오브젝트가 존재하는지 확인 하는 필터로 값이 있을 경우 true를 반환 한다, 어떤 property도 필터가 가능하다
 ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우 true 반환
 
+// # 6.23
+//  Mongoose - pre() 함수 --> ex) 변수명.pre("save", function(){ })
+//   - 특정 이벤트가 발생하기 전에 실행되는 미들웨어를 정의하는 데 사용됩니다.
+//   - 역할: 특정 이벤트가 발생하기 전에 미리 지정된 함수를 실행.
+//   - 사용되는 이벤트: save, validate, remove, update, findOneAndUpdate, 등.
+//  middleware는 무조건 model이 생성되기 전에 만들어야 한다
+//  mongoose의 middleware에서 this키워드는 저장하고자 하는 문서를 가리킴
+//  middleware에서 해시태그 관리 구현
+// ex)
+//   videoSchema.pre("save", async function () {
+//     this.hashtags = this.hashtags[0]
+//       .split(",")
+//       .map((word) => (word.startsWith("#") ? word : `#${word}`));
+//   });
+//  const Video = mongoose.model("Video", videoSchema);
 
+// # 6.24
+// export 와 default export 같이 할 경우 import하는 방법
+//  - ex) import Video, { exportName } from "../models/Video";
+// 1. findByIdAndUpdate()에서는 save 훅업이 발생하지 않음 => 다른 방법을 알아보자
+// 2. Video.js에 function을 만들어서 관리하기 => 이것도 괜찮음 근데 다른것도 알아보자
+// 3. static을 사용하면 import 없이도 Model.function()형태로 사용이 가능함 => super cool
+// ex)
+//  videoSchema.static("formatHashtags", function(hashtags){
+//    return hashtags.split(",").map((word) => (word.startsWith("#") ? word : `#${word}`))
+//  });
+//  const Video = mongoose.model("Video", videoSchema);
 
+// hashtags: Video.formatHashtags(hashtags),
+
+// # 6.25
+// findByIdAndDelete(id)는 findOneAndDelete({_id:id})의 줄임말
+// * Model.findOneAndDelete()
+// Model.findOneAndRemove()
+// 이 둘은 정말 약간의 차이가 있는데 대부분의 상황에서 타당한 이유가 없는 한 delete를 사용하라고 되어 있음.
+
+// # 6.26
+// model.sort({ }) --> 정렬하고싶은 기준 : desc(내림차순) , asc(오름차순)
+// 정렬 순서를 설정합니다. 
+// ex) const videos = await Video.find({}).sort({ createdAt: "desc" });
+
+// 라우터로 지정한 :id -> req.params
+// pug파일에서 input으로 받은 내용 -> req.body(form이 POST일 때)
+// pug파일에서 input으로 받은 url내용 -> req.query (form이 GET일 때)
+// req.query
+// 라우트 안에 query string parameter를 포함하고 있는 객체로, URL에서 데이터를 가져올 때 주로 사용한다.
+// 예) ?keyword="food" => {keyword: "food"}
+// query parse가 비활성화로 설정되면 빈 객체 {}이고, 그렇지 않으면 구성된 query parse의 결과입니다.
+
+// # 6.27
+
+// videos title을 검색할때 keyword가 포함된것들을 regex operator를 통해 검색해 줄 수 있다.
+// (regex = regular expression의 약자)
+// const { keyword } = req.query;
+
+// $regex: new RegExp(keyword, "i") -> keyword가 포함된 것들을 검색.
+// $regex: new RegExp(`^${keyword}`, "i") -> keyword로 시작되는 것들을 검색(keyword 앞에 ^이 붙으면 - 시작점)
+// $regex: new RegExp(`${keyword}$`, "i") -> keyword로 끝나는 것들을 검색(keyword 뒤에 $이 붙으면 - 끝점)
+// (여기서 "i" = Welcome,welcome 둘다 같게 해주는것 즉 lowercase,uppercase의 구분을 없게 해주는것)
+// ( mongoose가 아닌 mongoDB가 해주는 기능이다)
+
+// Model.find()
+// documents를 찾습니다. (findOne과 다르게 전체 document를 찾습니다.)
+// Mongoose는 명령이 전송되기 전에 모델의 스키마와 일치하도록 필터를 캐스팅합니다.
+// https://mongoosejs.com/docs/api.html#model_Model.find
+
+// 정규표현식
+// https://www.regexpal.com
+
+// 몽고DB regex ($regex)
+// 몽고DB에서 정규표현식을 사용하기 위해 사용하는 키워드
+// 쿼리의 패턴 일치 문자열에 대한 정규식 기능을 제공합니다.
+// https://docs.mongodb.com/manual/reference/operator/query/regex
+
+// RegExp mdn
+// RegExp 생성자는 패턴을 사용해 텍스트를 판별할 때 사용합니다.
+// https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+
+// RegExp 사용 방법
+// RegExp 객체는 리터럴 표기법과 생성자로써 생성할 수 있습니다.
+// 리터럴 표기법의 매개변수는 두 빗금으로 감싸야 하며 따옴표를 사용하지 않습니다.
+// 생성자 함수의 매개변수는 빗금으로 감싸지 않으나 따옴표를 사용합니다.
+
+// /ab+c/i 를 아래 RegExp 생성자를 이용해서 만들 수 있습니다.
+// new RegExp(/ab+c/, 'i') // 리터럴 표기법
+// new RegExp('ab+c', 'i') // 생성자 함수
 
 
 // ------------------------------- //#6 MONGODB AND MONGOOSE -------------------------------
