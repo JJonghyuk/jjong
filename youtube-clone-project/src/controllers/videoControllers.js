@@ -35,7 +35,7 @@ export const postEdit = async (req, res) => {
   return res.redirect(`/videos/${id}`);
 }
 
-export const getUpload = async (req, res) => {
+export const getUpload = (req, res) => {
   return res.render("upload",{pageTitle: "Upload Video"});
 }
 

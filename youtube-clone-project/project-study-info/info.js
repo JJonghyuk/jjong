@@ -544,6 +544,7 @@
 // })
 //   - model 이름과, 테이터의 형태인 schema를 설정
 // const Video = mongoose.model("Video", videoSchema);
+// ==> 여기서 "Video" <- 이거는 DB에 저장할 객체 이름을 정하는것
 // * String.split() ---> split() 단어를 지정된것으로 지정할시 단어 별로 배열을 만들어 낸다.
 // ex) genres.split(",") 일시에 , 를 기준으로 단어를 끊어 배열로 지정함.
 
