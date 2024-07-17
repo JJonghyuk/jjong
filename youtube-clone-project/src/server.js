@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
-import globalRouter from "./router/globalRouter";
+import session from "express-session";
+import rootRouter from "./router/rootRouter";
 import userRouter from "./router/userRouter";
 import videoRouter from "./router/videoRouter";
 
@@ -11,7 +12,19 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(logger);
 app.use(express.urlencoded({extended: true}))
-app.use("/",globalRouter);
+app.use(
+  session({
+    secret: "Hello!",
+    resave: true,
+    saveUninitialized: true,
+  })
+)
+app.get("/add-one",(req, res, next) => {
+  req.session.potato += 1;
+  return res.send(`${req.session.id}`)
+})
+
+app.use("/",rootRouter);
 app.use("/users",userRouter);
 app.use("/videos",videoRouter);
 

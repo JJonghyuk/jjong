@@ -789,10 +789,10 @@ ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우
 // ex) const videos = await Video.find({}).sort({ createdAt: "desc" });
 
 // 라우터로 지정한 :id -> req.params
-// pug파일에서 input으로 받은 내용 -> req.body(form이 POST일 때)
+// pug파일에서 input으로 받은 내용 -> req.body (form이 POST일 때)
 // pug파일에서 input으로 받은 url내용 -> req.query (form이 GET일 때)
-// req.query
-// 라우트 안에 query string parameter를 포함하고 있는 객체로, URL에서 데이터를 가져올 때 주로 사용한다.
+// * req.query
+//  - 라우트 안에 query string parameter를 포함하고 있는 객체로, URL에서 데이터를 가져올 때 주로 사용한다.
 // 예) ?keyword="food" => {keyword: "food"}
 // query parse가 비활성화로 설정되면 빈 객체 {}이고, 그렇지 않으면 구성된 query parse의 결과입니다.
 
@@ -842,8 +842,94 @@ ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우
 
 // ------------------------------- #7 USER AUTHENTICATION -------------------------------
 
+// # 7.1
+// User.js --> Schema 에서 타입 형태 정의에 unique: true;
+// unique: true --> 해달 Schema 필드에서의 고유값으로 데이터가 중복되지 않도록 한다.
+// ex) email: { type: String, required: true, unique: true }
+// ALT + SHIFT + I --> 선택된 영역에 커서 추가
+// * password --> 암화하 하는걸 password hashing(해싱) 이라고 한다.
+
+// # 7.2
+// * hash 함수
+//  1. 동일한 입력값(input)에 대한 동일한 출력값(output)을 갖고 있음(입력값이 바뀌지 않으면 출력값도 바꾸지 않는다는 소리)
+      ex) 비밀번호: 12345 -> 해시함수 -> 4qwf9i4ke93k20ek ---> 입력값에 맞춰 동일한 출력값이 나옴(암호화)
+    2. 입력값이 아주 살짝만 바뀌어도 출력값은 어마하게 바뀜
+    3. 항상 같은 방향, 일방향으로만 움직임.
+// * 레인보우 테이블로 해쉬 함수의 비밀번호를 알아 낼수 있지만, salt 라는 랜덤 텍스트인데 유저가 아이디를 만들게 되면은 패스워드 + salt(랜덤 텍스트)와 해쉬 함수화 하여 보안을 할수 있게 만듬.
+// 해싱 = DB에 비밀번호를 저장할때 랜덤한 값으로 저장시켜주는걸 의미.
+// 단방향 함수, (무조건 비밀번호 => 해싱 값 (NO! 해싱값 -> 비밀번호))
+// 입력값 = 출력값 항상 같을 경우 이거를 deterministic function(결정적 함수) 라고 함.
+
+// * bcrypt
+// 암호를 해시하는 데 도움이 되는 라이브러리입니다.
+// npm i bcrypt
+// https://www.npmjs.com/package/bcrypt
+
+// bcrypt.hash(password what we write, saltRounds, function(err,hash) { } <- 콜백 함수);
+// ex) this.password = await bcrypt.hash(this.password, 5);
+// saltRounds ---> password를 더 예측하기 어렵게 해싱 해서 출력값을 더 랜덤하게 바꿔줌.
+
+// # 7.3
+// - 계정의 중복생성을 방지하자
+// - model의 exist 함수를 이용하여 중복여부 파악 가능
+// - $or 함수 이용하면 둘중 하나 선택 가능
+// $or --> 함수안에 조건에 맞는게 하나라도 만족할시에 반환한다.
+// ex) const exists = await User.exists({ $or:[{ username }, { email }] })
+
+// # 7.4
+// * status code(상태 코드)
+// https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C
+
+//  - 200(OK): 서버가 요청을 제대로 처리했다는 뜻이다. 이는 주로 서버가 요청한 페이지를 제공했다는 의미로 쓰인다.(2 로 시작하는 상세 코드는 ok로 통함) --> ok 일 경우 브라우저에 히스토리가 남음
+//  - 400(Bad Request): 서버가 요청의 구문을 인식하지 못할 때 발생한다. 클라이언트 측에서 문제가 있을 때 주로 발생한다.
+//  - 404(Not Found): 서버가 요청한 페이지를 찾을 수 없을 때 발생한다. 서버에 존재하지 않는 페이지에 대한 요청이 있을 경우 서버는 이 코드를 제공한다.
+// ex) res.status(400).render()
+// response에 대한 HTTP 상태를 설정합니다. (status를 설정한다.)
+
+// # 7.6
+// 해싱한 password를 알아낼 필요는 없다 유저가 입력한 값이 해싱됐을때 db의 해싱된 password와 일치하는지 비교하면될뿐!
+// *compare() - bcrypt.compare(user password, database password)
+// ex) const ok = await bcrypt.compare(password, user.password);
 
 
+// # 7.7
+// 세션 - 브라우저와 백엔드 사이의 memory, history 같은거
+// router 앞에 설정 해줘야 한다.
+// 세션 설정시 브라우저가 알아서 백엔드로 쿠키를 보내도록 됨
+
+// * express-session
+// Express용 세션 미들웨어
+// 세션 데이터는 쿠키 자체에 저장되지 않고 세션 ID에만 저장됩니다. 세션 데이터는 서버 측에 저장됩니다.
+// npm i express-session
+// https://www.npmjs.com/package/express-session
+
+// - 기본적으로 서버와 유저의 연결은 stateless(무상태)한 성질을 띈다.(wifi가 쭉 연결되어 있는것과 다르게 주고 받으면 연결이 끊킴 그러한 상태를 stateless)
+// - 이러한 연결 특성으로 인해 매번 연결시 유저는 새로이 서버에 자신을 확인 받아야 함
+// - 만약 증표(증거)가 있다면 다시 연결시 유저에 대한 확인이 쉬워짐
+// - 쿠기가 증표 역활을 함. 유저는 서버 연결시 서버에게 증표를 건네받음(쿠키는 유저가 보관)
+// - 서버는 session으로 해당 증표를 가진 유저의 기록을 저장해둠
+// - 유저가 증표(쿠키)를 가지고 오면 서버는 저장되어 있는 session을 통해 유저를 쉽게 확인
+
+// 서버와 클라이언트가 상호작용한다. -> 서버가 클라이언트(브라우저)에게 쿠키를 준다. -> Session에 그 쿠키와 관련된 정보가 저장된다.
+
+// 클라이언트가 req한다. -> 클라이언트가 쿠키를 보인다. -> 서버는 Session을 이용해 신원을 확인한다. -> 서버가 클라이언트를 식별한다.
+
+
+// # 7.8
+
+// 세션은 express가 세션을 메모리에 저장하고 있어, 서버를 재시작할때 마다 세션이 사라짐.
+// 세션 보이기
+// ex)
+    app.get("/add-one",(req, res, next) => {
+      return res.send(`${req.session.id}`)
+    })
+// 서버 세션id 브라우저에 넘김 -> 브라우저의 쿠키에 세션 id 담고 있음 -> 브라우저가 요청을 보냄 -> 쿠키에서 세션 id를 가져와 서버에 보냄 -> 서버가 세션 id를 읽고 누구인지 알 수 있음.(어떤 브라우저인지 알 수 있음)
+
+// 세션은 서버측에서 제공해주는 데이터, 쿠키는 클라이언트측에서 저장하고 사용하는 데이터
+// req.sessiontStore() 사용했을때 한번은 undefined가 나온 이유가 세션은 서버에서 만들어줘야 하는데 클라이언트가 첫 요청때 세션을 가지고있을리 없으니 undefined이 나온거고 그 이후 요청부턴 첫번째 요청때 세션을 만들어서 넘겨줬으니 클라이언트가 해당 값을 쿠키에 저장하고 매 요청때마다 서버에게 전달
+// 세션은 서버가 만들어서 제공해주다보니 서버가 재부팅되면 초기화 된다. (그래서 DB에 저장해서 관리를 한다는 소리. 실 운영에선 서버가 꺼지는 일은 없으니깐.)
+// 세션의 값은 서버가 만들어주는 고유값이다보니 해당 값을 기준으로 클라이언트에서 요청한 건에 대해 유저를 특정지을 수 있다
+// 서버가 세션을 생성한 기점은 middleware로 express-session을 추가했을때부터 생성됨.
 
 
 // ------------------------------- //#7 USER AUTHENTICATION -------------------------------
