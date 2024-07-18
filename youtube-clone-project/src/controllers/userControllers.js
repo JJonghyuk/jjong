@@ -39,7 +39,7 @@ export const getLogin = (req,res) => res.render("login",{pageTitle: "Login"});
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
-  const user = await User.findOne({username});
+  const user = await User.findOne({ username });
   // 계정이 존재 하는지 체크
   if(!user){
     return res
@@ -59,6 +59,8 @@ export const postLogin = async (req, res) => {
       errorMessage: "Wrong password."
     });
   }
+  req.session.loggedIn = true;
+  req.session.user = user;
   return res.redirect("/");
 }
 

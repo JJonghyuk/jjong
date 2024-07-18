@@ -154,17 +154,19 @@
 //   return res.send("Welcome to the private lounge.")
 // };
 
-// app.use(logger);
-// app.get("/", handleHome);
-// app.get("/protected",handleProtected);
+// ex)
+// - app.use(logger);
+// - app.use("/",rootRouter)
+// - app.get("/", handleHome);
+// - app.get("/protected",handleProtected);
 
 
 // #3.5
 // middleware --> 중간에 있는 소프트웨어 / request & response 사이에 있는것 / use(""), get("") 함수에서 사용 가능
-//  - (req, res, next) 함수 3개 필요 next 함수를 사용함(middleware가 아닌 마지막 함수는 next() 함수 사용x)
+//  - (req, res, next) 함수 3개 필요 *next 함수를 사용함(middleware가 아닌 마지막 함수는 next() 함수 사용x)
 //  - 다음 함수로 넘기는 함수
 // middleware = controller
-//  - ex) const handleClick = (req, res, next) --> next라는 함수가 있는데, 함수가 끝나고 next() 함수를 실행해주는거다. 
+//  - ex) const handleClick = (req, res, next) --> next라는 함수가 있는데, 함수가 끝나고 *꼭* next() 함수를 실행해주는거다. 
 //  - ex) app.get("/", next가 실행할 함수들, handleHome)
 // middleware 
 
@@ -652,7 +654,32 @@
     });
 
 // MongoDB의 collection이름이 Video가 아닌 videos인 이유 (터미널에서 확인시 )
-// * mongosh 실행 후 - show dbs(wetube 데이터 저장된걸 확인할 수 있음) > use wetube > show collections(document 들의 묶음)
+// * mongosh 실행 후 - show dbs(wetube 데이터 저장된걸 확인할 수 있음) > use wetube > show collections(document 들의 묶음) > db.dropDatabase() --> 데이터 선택 후 삭제 가능
+
+// 1. 몽고 사용하기
+// > mongo
+
+// 2. 내가 가진 db 보기
+// > show dbs
+
+// 3. 현재 사용 중인 db 확인
+// > db
+
+// 4. 사용할 db 선택하기
+// > use dbName
+// (현재 수업에서는 `use wetube`)
+
+// 5. db 컬렉션 보기
+// > show collections
+
+// 6. db 컬렉션 안에 documents 보기
+// > db.collectionName.find()
+// (현재 수업에서는 `db.videos.find()`)
+
+// 7. db 컬렉션 안에 documents 내용 모두 제거하기
+// > db.collectionName.remove({})
+// (현재 수업에서는 `db.videos.remove({})`)
+
 // Mongoose는 자동으로 모델을 찾고, 해당 모델의 이름을 따서 소문자+뒤에 s(복수형)을 붙여 컬렉션을 생성합니다.
 // Tank 모델은 -> 컬렉션에 저장될 때, tanks로 저장됩니다.
 
@@ -897,6 +924,30 @@ ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우
 // router 앞에 설정 해줘야 한다.
 // 세션 설정시 브라우저가 알아서 백엔드로 쿠키를 보내도록 됨
 
+// - 사이트를 들어오는 모두의 세션 ID를 기억함
+// - express는 알아서 그 브라우저를 위한 session id를 만들고
+// - 브라우저에게 보내줌 (자동)
+
+// - 브라우저는 쿠키에 그 session id를 저장하고
+// - express에서도 세션을 세션 DB에 저장
+
+// - DB에 있는 id === Cookies에 있는 id
+// app.use(
+//   session({
+//     secret: "Hello!",
+//     resave: true,
+//     saveUninitialized: true,
+//   })
+// )
+
+// - *사이트를 들어오는 세션 ID를 콘솔로 나타냄*
+// app.use((req, res, next) => {
+//   req.sessionStore.all((error, sessions) => {
+//     console.log(sessions);
+//     next();
+//   });
+// }) ;
+
 // * express-session
 // Express용 세션 미들웨어
 // 세션 데이터는 쿠키 자체에 저장되지 않고 세션 ID에만 저장됩니다. 세션 데이터는 서버 측에 저장됩니다.
@@ -918,18 +969,48 @@ ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우
 // # 7.8
 
 // 세션은 express가 세션을 메모리에 저장하고 있어, 서버를 재시작할때 마다 세션이 사라짐.
+// 세션은 모든 브라우저가 똑같은 세션을 가지고 있지 않음(각기 다른 세션을 갖고 있음)
 // 세션 보이기
 // ex)
     app.get("/add-one",(req, res, next) => {
       return res.send(`${req.session.id}`)
     })
-// 서버 세션id 브라우저에 넘김 -> 브라우저의 쿠키에 세션 id 담고 있음 -> 브라우저가 요청을 보냄 -> 쿠키에서 세션 id를 가져와 서버에 보냄 -> 서버가 세션 id를 읽고 누구인지 알 수 있음.(어떤 브라우저인지 알 수 있음)
+// express가 브라우저를 위한 세션 ID를 만듬(express에서도 세션을 세션 DB에 저장함) -> 서버가 세션id를 브라우저에 넘김 -> 브라우저의 쿠키에 세션 id 담고 있음 -> 쿠키에 저장한 세션 id를 브라우저가 모든 URL에(현재 있는 사이트 주소) 요청과 함께 보냄 -> 서버가 세션 id를 읽고 누구인지 알 수 있음.(어떤 브라우저인지 알 수 있음)
+
+// 세션은 서버측에서 제공해주는 데이터,
+// 쿠키는 클라이언트측에서 저장하고 사용하는 데이터
 
 // 세션은 서버측에서 제공해주는 데이터, 쿠키는 클라이언트측에서 저장하고 사용하는 데이터
-// req.sessiontStore() 사용했을때 한번은 undefined가 나온 이유가 세션은 서버에서 만들어줘야 하는데 클라이언트가 첫 요청때 세션을 가지고있을리 없으니 undefined이 나온거고 그 이후 요청부턴 첫번째 요청때 세션을 만들어서 넘겨줬으니 클라이언트가 해당 값을 쿠키에 저장하고 매 요청때마다 서버에게 전달
+// req.sessionStore() 사용했을때 한번은 undefined가 나온 이유가 세션은 서버에서 만들어줘야 하는데 클라이언트가 첫 요청때 세션을 가지고있을리 없으니 undefined이 나온거고 그 이후 요청부턴 첫번째 요청때 세션을 만들어서 넘겨줬으니 클라이언트가 해당 값을 쿠키에 저장하고 매 요청때마다 서버에게 전달
 // 세션은 서버가 만들어서 제공해주다보니 서버가 재부팅되면 초기화 된다. (그래서 DB에 저장해서 관리를 한다는 소리. 실 운영에선 서버가 꺼지는 일은 없으니깐.)
 // 세션의 값은 서버가 만들어주는 고유값이다보니 해당 값을 기준으로 클라이언트에서 요청한 건에 대해 유저를 특정지을 수 있다
 // 서버가 세션을 생성한 기점은 middleware로 express-session을 추가했을때부터 생성됨.
+
+// # 7.9
+
+// * 아래 처럼 선언시에 세션에 정보를 추가하는것
+//  - req.session.loggedIn = true;
+//  - req.session.user = user;
+
+// # 7.10
+// *res 안에는 locals 속성이 있음.
+// express가 pug와 서로 locals에 공유 할 수 있도록 설정되어 있음.(모드 pug template에서 사용 가능, 글로벌, *미들웨어를 라우터에 적용 했을때 한해서*)
+// ex)
+//  - express 에서는 res.locals.sexy = "sexy"
+//  - pub 에서는 #{sexy} 라고만 작성 하면은 변수가 적용됨
+
+// # 7.11
+// 1. backend browser가 소통하는 방식
+// backend와 browser는 session ID를 저장하는데
+// browser는 cookie라는 것에 저장을 하고 다닌다 그래서 browser가 backend에 요청할때는 cookie를 보내고 backend에서 session ID의 유무를 확인한후 응답을 해주는 방식
+
+// 2. 로그인 하는 방법
+// req.session을 통해 session(object로 이루어져있음)에 접근이 가능하다
+// loggedIn = true , user = user(앞서 변수로 선언한) 를 넣어줌으로 res.local으로 접근해서 가져올 수가 있다!
+
+
+
+
 
 
 // ------------------------------- //#7 USER AUTHENTICATION -------------------------------
