@@ -1049,6 +1049,97 @@ ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우
         req.session.user = user;
 
 
+// # 7.14
+// store --> 링크 보호 필수
+
+// Set-Cookie
+// Set-Cookie HTTP 응답 헤더는 서버에서 사용자 브라우저에 쿠키를 전송하기 위해 사용됩니다.
+// https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Set-Cookie
+
+// 쿠키에 설정가능한 옵션
+// Domain
+// 쿠키가 적용되어야 하는 호스트를 지정.
+
+// Expires
+// HTTP 타임스템프로 기록된 쿠키의 최대 생존 시간(수명).
+
+// Max-Age
+// 쿠키가 만료될 때 까지의 시간 (밀리세컨드: 1/1000초)
+
+// secret
+// 이것은 세션 ID 쿠키에 서명하는 데 사용되는 비밀입니다.
+// https://www.npmjs.com/package/express-session
+
+// COOKIE_SECRET에 넣을 랜덤 문자열 생성 사이트
+// https://randomkeygen.com/
+
+// Environment File (환경변수 만들기)
+// 1. .env 파일 만들기
+// 2. env 파일을 .gitignore에 추가하기. (git에 업로드 하지 않기 위해)
+// 3. .env 파일에 대문자로(관습적) 환경변수를 만들고 = 다음에 원하는 내용 쓰기 (string 이면 “”안에 쓰기) (eg. COOKIE_SECRET=“hello”)
+// ex) DB_URL=mongodb://127.0.0.1:27017/wetube  --> "" 없이
+// 4. js 코드에서 비밀로 해야하는 string을 precess.env.[환경변수이름]으로 바꾸기
+// ex) process.env.COKIE_SECRET
+
+COOKIE_SECRET=dgdfgdfgdfg445654546dsadasd
+DB_URL=mongodb://127.0.0.1:27017/wetube
+
+
+// # 7.15
+// process.env.(환경변수) 읽어보자!
+// 1. npm i dotenv
+// 2. 가능한 한 가장 먼저 사용하기 require("dotenv").config()
+//    --> require("dotenv").config(); 함수 먼저 사용 해야지 env 변수를 사용할 수 있음
+// 2-1)사용할 모든 파일에 require("dotenv").config() 붙이기
+// 2-2)require("dotenv").config()로는 import 되는 파일에는 적용이 되지 않기 때문에
+//     --> import "dotenv/config" 로 함수명을 변환 후 init.js에 넣어주기
+// (why init.js? -> dev를 실행하면 init.js가 제일 먼저 실행되기 때문)
+
+
+// # 7.16
+https://github.com/settings/apps
+
+http://localhost:4000/users/github/callback
+
+https://github.com/login/oauth/authorize  --> 깃허브 로그인(오류)
+https://github.com/login/oauth/authorize?client_id=입력값 --> 내 서버로 로그인 연결
+https://github.com/login/oauth/authorize?client_id=입력값&allow_signup=false --> 로그인만 가능하게, 회원가입 x
+
+
+// Authorizing OAuth Apps
+// 다른 사용자가 OAuth 앱을 승인하도록 할 수 있습니다.
+// GitHub의 OAuth 구현은 웹 브라우저에 대한 액세스 권한이 없는 앱에 대한 표준 인증 코드 부여 유형 및 OAuth 2.0 장치 인증 부여를 지원합니다.
+
+// Web application flow
+// 웹 애플리케이션 흐름: 브라우저에서 실행되는 표준 OAuth 앱에 대해 사용자에게 권한을 부여하는 데 사용됩니다.
+// 앱 사용자에게 권한을 부여하는 웹 애플리케이션 흐름은 다음과 같습니다.
+// 1. 로그인하려는 사이트에서 유저의 GitHub identity를 request하기 위해 유저를 GitHub 페이지로 리다이렉트시킵니다.
+// 2. 유저는 리다이렉트된 GitHub에서 승인을 하고, GitHub에 의해 다시 로그인하려는 사이트로 리다이렉트됩니다.
+// 3. 로그인 하려는 사이트는 유저의 액세스 토큰을 통해 API에 접근합니다.
+// https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps
+
+// 깃허브 OAuth Apps Setting
+// GitHub API를 사용하기 위해 등록한 애플리케이션입니다.
+// https://github.com/settings/developers
+
+// Scopes for OAuth Apps (OAuth 앱의 범위)
+// https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
+
+// Creating an OAuth App (OAuth앱 만들기)
+// https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app
+
+
+// # 7.17
+
+
+
+
+// # 7.18
+
+
+
+
+
 
 // # 8.05
 
