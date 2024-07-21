@@ -1008,10 +1008,52 @@ ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우
 // req.session을 통해 session(object로 이루어져있음)에 접근이 가능하다
 // loggedIn = true , user = user(앞서 변수로 선언한) 를 넣어줌으로 res.local으로 접근해서 가져올 수가 있다!
 
+-----
+
+// # 7.12
+// Express Session
+// 쿠키에는 세션 데이터가 아닌 세션 ID에만 저장됩니다. 세션 데이터는 서버 측에 저장됩니다. 하지만 기본 서버 측 세션 저장소인 MemoryStore는 production 환경용으로 설계되지 않았습니다.
+// https://www.npmjs.com/package/express-session
+
+// Compatible Session Stores (호환가능한 세션 스토어)
+// https://www.npmjs.com/package/express-session#compatible-session-stores
+
+// connect-mongo
+// Typescript로 작성된 Connect 및 Express용 MongoDB 세션 저장소.
+// *npm i connect-mongo - 설치
+// https://www.npmjs.com/package/connect-mongo
+
+// store: MongoStore.create({mongoUrl:"mongodb://127.0.0.1:27017/wetube"}), <-- 추가로 인해 쿠키에 session id가 등록됨
+
+// -세션을 db에 저장하기 위해 session store에 저장한다.
+// -connect mongo 이용
+// -mongo db의 url을 가지고 있는 configuration object를 만들어야 한다.
+// -session middleware에는 store란 option이 있다.
+// -MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" })
+
+// # 7.13
+// 쿠키를 구성하는 요소
+// * resave : 모든 request마다 세션의 변경사항이 있든 없든 세션을 다시 저장한다.
+//  - true:
+// + 스토어에서 세션 만료일자를 업데이트 해주는 기능이 따로 없으면 true로 설정하여 매 request마다 세션을 업데이트 해주게 한다.
+//  - false:
+// + 변경사항이 없음에도 세션을 저장하면 비효율적이므로 동작 효율을 높이기 위해 사용한다.
+// + 각각 다른 변경사항을 요구하는 두 가지 request를 동시에 처리할때 세션을 저장하는 과정에서 충돌이 발생할 수 있는데 이를 방지하기위해 사용한다.
+
+// * saveUninitialized : uninitialized 상태인 세션을 저장한다. 여기서 uninitialized 상태인 세션이란 request 때 생성된 이후로 아무런 작업이 가해지지않는 초기상태의 세션을 말한다.
+//  - true:
+// + 클라이언트들이 서버에 방문한 총 횟수를 알고자 할때 사용한다.
+//  - false:
+// + uninitialized 상태인 세션을 강제로 저장하면 내용도 없는 빈 세션이 스토리지에 계속 쌓일수 있다. 이를 방지, 저장공간을 아끼기 위해 사용한다.(수정 된 걸 확인하면 세션 저장)
+// ex)  req.session.loggedIn = true;  <-- 로그인 시에 세션 저장으로 인해 수정 됨
+        req.session.user = user;
 
 
 
+// # 8.05
 
+
+-----
 
 // ------------------------------- //#7 USER AUTHENTICATION -------------------------------
 
