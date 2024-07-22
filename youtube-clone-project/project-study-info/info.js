@@ -950,7 +950,7 @@ ex) Video.exists({ _id: id }), Video.exists({ hello: "title" }) 존재할 경우
 
 // * express-session
 // Express용 세션 미들웨어
-// 세션 데이터는 쿠키 자체에 저장되지 않고 세션 ID에만 저장됩니다. 세션 데이터는 서버 측에 저장됩니다.
+// 세션 데이터는 쿠키 자체에 저장되지 않고 세션 ID에만 저장됩니다. 세션 데이터는 서버(메모리) 측에 저장됩니다.
 // npm i express-session
 // https://www.npmjs.com/package/express-session
 
@@ -1095,7 +1095,7 @@ DB_URL=mongodb://127.0.0.1:27017/wetube
 //     --> import "dotenv/config" 로 함수명을 변환 후 init.js에 넣어주기
 // (why init.js? -> dev를 실행하면 init.js가 제일 먼저 실행되기 때문)
 
-
+*****
 // # 7.16
 https://github.com/settings/apps
 
@@ -1130,18 +1130,192 @@ https://github.com/login/oauth/authorize?client_id=입력값&allow_signup=false 
 
 
 // # 7.17
+// scope = 유저에게서 얼마나 많이 정보를 읽어내고 어떤 정보를 가져올 것에 대한것\
+// 여러 정보들은 우리가 선택해서 볼 수 있게 할 수 있다.
 
+// Scopes for OAuth Apps
+// OAuth 앱은 초기 리디렉션에서 범위를 요청할 수 있습니다.
+// '%20'을 사용하여 공백으로 구분하여 여러 범위를 지정할 수 있습니다.
+// // 사용 예시
+// --> https://github.com/login/oauth/authorize?client_id=...&scope=user%20repo_deployment
+
+// https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
+
+// URLSearchParams
+// URLSearchParams 인터페이스는 URL의 쿼리 문자열에 대해 작업할 수 있는 유틸리티 메서드를 정의합니다.
+// https://developer.mozilla.org/ko/docs/Web/API/URLSearchParams
+
+// URLSearchParams.toString()
+// toString() 은 URLSearchParams 인터페이스의 메소드로서, URL에서 사용할 수 있는 쿼리 문자열을 리턴합니다.
+// https://developer.mozilla.org/ko/docs/Web/API/URLSearchParams/toString
 
 
 
 // # 7.18
+// 1. fetch('url')로 다른 서버를 통해 데이터를 가져올 수있다.
+// 하지만, res.body 에 담겨있는 날것의 url로는 제대로 된 객체를 받아올 수 없다.
+
+// 2.때문에 중간에 .json 함수가 response의 스트림을 가져와 끝까지 읽고, res.body의 텍스트를 promise의 형태로 반환한다.
+
+// 3. 다른 서버에서 데이터를 object 형식으로 받아온다.
+// ex){"coord":{"lon":139.01,"lat":35.02},"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}],"base":"stations","main":{"temp":285.514,"pressure":1013.75,"humidity":100,"temp_min":285.514,"temp_max":285.514,"sea_level":1023.22,"grnd_level":1013.75},"wind":{"speed":5.52,"deg":311},"clouds":{"all":0},"dt":1485792967,"sys":{"message":0.0025,"country":"JP","sunrise":1485726240,"sunset":1485763863},"id":1907296,"name":"Tawarano","cod":200}
+
+// [2022.01.24] HTTP headers (fetch의 header의 역할)
+// HTTP headers는 는 클라이언트와 서버가 request(or response)로 부가적인 정보를 전송할 수 있도록 해줍니다
+
+// Accept
+// 돌려줄 데이터 타입에 대해 서버에게 알려주는 역할을 합니다
+// MIME 타입입니다
+// (MIME type이란 웹에서 사용되는 확장자라고 생각하시면 되며
+// type/subtype으로 구성되어 있습니다)
+
+// Authorization
+// 보호된 리소스에 대한 접근을 허용하여 서버로 User agent를 인증하는 자격증명을 보내는 역할을 합니다
+
+
+// # 7.19
+// Error [ERR_REQUIRE_ESM]: require() of ES Module 오류 발생 시 두 가지 방법 중 하나로 해결할 수 있습니다.
+
+// 1. node-fetch 3버전이 아닌 2버전으로 다운그레이드된 버전을 설치해서 해결할 수 있습니다.
+// npm i node-fetch@2.6.1 (강의와 같은 버전)
+// https://www.npmjs.com/package/node-fetch
+
+// 2. cross-fetch 사용 (CommonJS, ES6 모듈, Typescript등에서도 사용가능)
+// node-fetch대신 사용할 수 있는 cross-fetch 패키지를 통해 해결할 수 있습니다. node-fetch와 사용법은 동일합니다.
+// Node, 브라우저 및 React Native용 범용 WHATWG Fetch API.
+// npm i cross-fetch
+// ```
+// import fetch from 'cross-fetch';
+
+// fetch(...)
+// ```
+// https://www.npmjs.com/package/cross-fetch
+
+// node-fetch 버전3 문제
+// v3의 node-fetch는 ESM 전용 모듈입니다. require()로 가져올 수 없습니다. ESM으로 전환할 수 없는 경우 CommonJS와 호환되는 v2를 사용하십시오.
+// 중요한 버그 수정은 v2에 대해 계속 게시됩니다.
+
+// Use the access token to access the API
+// 액세스 토큰을 사용하면 유저를 대신해 API에 요청할 수 있습니다.
+// ```
+// Authorization: token OAUTH-TOKEN
+// GET https://api.github.com/user
+// ```
+// https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps#3-use-the-access-token-to-access-the-api
+
+*****
+
+// # 7.20
+// Github REST API (User)
+// 사용자 API를 사용하면 인증된 사용자에 대한 공개 및 비공개 정보를 얻을 수 있습니다.
+// https://docs.github.com/en/rest/reference/users
+
+// Get the authenticated user
+// 인증된 사용자가 기본 인증 또는 사용자 범위의 OAuth를 통해 인증되면 응답에 공개 및 비공개 프로필 정보가 나열됩니다. 인증된 사용자가 사용자 범위 없이 OAuth를 통해 인증된 경우 응답에는 공개 프로필 정보만 나열됩니다.
+
+// Add an email address for the authenticated user
+// https://docs.github.com/en/rest/reference/users#add-an-email-address-for-the-authenticated-user
+
+// List public email addresses for the authenticated user
+// 인증된 사용자의 공개 이메일 주소 나열
+// https://docs.github.com/en/rest/reference/users#list-public-email-addresses-for-the-authenticated-user
+
+
+// # 7.21
 
 
 
+// # 7.22
+// Session.destroy(callback)
+// --> 세션을 파괴하고 req.session 속성을 설정 해제합니다. 완료되면 콜백이 호출됩니다.
+// ex) req.session.destroy();
 
+
+// # 7.23
+// 카카오 로그인 구현하기 (REST API)
+
+// 카카오 로그인 구현하실 분들은 아래 링크들을 참조하시면 됩니다.
+// 구현 방식은 깃허브 로그인과 거의 동일합니다.
+// https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api
+
+// 0. 애플리케이션 등록
+// https://developers.kakao.com/docs/latest/ko/getting-started/app
+
+// 1. 인가 코드 받기
+// https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-code
+
+// 2. 토큰 받기
+// https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
+
+// 3. 사용자 정보 가져오기
+// https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
+
+// # 8.01
+// all() --> get, post, put, delete 등 모든 http method에 적용됨
+// (get/post 둘다 공통된 함수를 넣고 싶으면 all을 이용하면된다.)
+
+// # 8.02
+// const {
+//   session: {
+//     user: { _id },
+//   },
+//   body: { name, email, username, location },
+// } = req;
+// *위 코드 es6이며 아래 코드와 같음
+// const id = req.session.user._id
+
+// Model.findByIdAndUpdate()
+// 문서의 _id 필드로 mongodb findAndModify 업데이트 명령을 실행합니다. findByIdAndUpdate(id, ...)는 findOneAndUpdate({ _id: id }, ...)와 동일합니다.
+
+// // 사용 예시
+// Model.findByIdAndUpdate(id, { name: 'jason bourne' }, options, callback)
+
+// // is sent as (+타입스크립트)
+// Model.findByIdAndUpdate(id, { $set: { name: 'jason bourne' }}, options, callback)
+// https://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
+
+// # 8.03
+// findByIdAndUpdate() --> 찾은 데이터를 업데이트 해주고 싶으면  { new: true } 해주면 된다
+// ex)  
+//   const updatedUser = await User.findByIdAndUpdate(
+//     _id, 
+//     {
+//       name,
+//       email,
+//       username,
+//       location,
+//     },
+//     { new: true}
+//   );
+//   req.session.user = updatedUser;
 
 
 // # 8.05
+// userSchema.pre("save", async function(){
+//   this.password = await bcrypt.hash(this.password, 5);
+// })
+// 위 처럼 pre("save") 할시에 아래 처럼 코드 사용하여 저장 할수 있음.
+// --> user.save();
+
+
+// await user.save();
+// return res.redirect("/users/logout");
+
+// 위와 같은 형태로 구현하면 해커들이 로직파악 후에 302 redirect를 프록시를 통해서 막은 후에 이전 세션 데이터도 활용할 수 있게 됩니다. 좀더 안전하게 하려면 아래와 같이 확실하게 destroy해주는게 좋아보여요.
+
+// req.session.destroy();
+// return res.redirect('/login');
+
+// 추가로 이전비밀번호와 변경비밀번호가 같으면 튕겨주는게 좋을 듯 합니다.
+
+// if (oldPassword === newPassword) {
+// return res.status(400).render('users/change-password', {
+// pageTitle,
+// errorMessage: 'The old password equals new password',
+// });
+// }
+
+
 
 
 -----
