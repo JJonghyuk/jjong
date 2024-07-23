@@ -98,7 +98,7 @@
 
 // ------------------------------- ##3 INTRODUCTION TO EXPRESS -------------------------------
 
-// *서버 만들기*
+// *서버 만들기* --> 서버(현재 서버 만든거는 로컬 컴퓨터)와 DB는 다른것!!
 
 // #3.0
 // import express from "express"; <-- express를 import하여 선언 해준다
@@ -528,6 +528,7 @@
 
 // # 6.10
 // * mongoDB에서는 _ID를 자동으로 생성해준다! --> mongoose에서 _ID를 string으로 변환해서 id를 만들어줌
+// * Schema --> 정의 할때 자동으로 '_id' 생성 되어짐
 // * model의 형태를 정의 할때 Schema(데이터베이스의 구조와 제약조건에 관해 전반적인 명세를 기술한 것)라고 한다.
 //  - 개체의 특성을 나타내는 속성(Attribute)과, 속성들의 집합으로 이루어진 개체(Entity), 그리고 개체 사이에 존재하는 관계(Relation)에 대한 정의를 포함하여, 이들이 지켜야 할 제약 조건을 기술한 것.
 //  - 물리적인 장치로부터 논리적인 데이터 베이스 레코드(data base record)를 매핑(mapping)하는 데 사용되는 정의 정보를 말한다. 즉 쿠키틀 이라고 보면 될거같네요..!
@@ -1250,6 +1251,15 @@ https://github.com/login/oauth/authorize?client_id=입력값&allow_signup=false 
 // 3. 사용자 정보 가져오기
 // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
 
+
+// ------------------------------- //#7 USER AUTHENTICATION -------------------------------
+
+
+
+
+// ------------------------------- #8 USER PROFILE -------------------------------
+
+
 // # 8.01
 // all() --> get, post, put, delete 등 모든 http method에 적용됨
 // (get/post 둘다 공통된 함수를 넣고 싶으면 all을 이용하면된다.)
@@ -1315,19 +1325,67 @@ https://github.com/login/oauth/authorize?client_id=입력값&allow_signup=false 
 // });
 // }
 
-
-
-
 -----
 
-// ------------------------------- //#7 USER AUTHENTICATION -------------------------------
+// # 8.06
+// Multer
+// Multer는 주로 파일 업로드에 사용되는 multipart/form-data를 처리하기 위한 node.js 미들웨어입니다.
+// 주의! Multer는 multipart(multipart/form-data)가 아닌 form을 처리하지 않습니다.
+// npm i multer
+// ex) form(enctype="multipart/form-data")
+// enctype="multipart/form-data"
+// https://www.npmjs.com/package/multer
 
+// multer(opts)
+// dest 또는 storage: 파일을 저장할 위치
+// ex) --> export const uploadFiles = multer({ dest: "uploads/" });
+// fileFilter: 허용되는 파일을 제어하는 ​​함수
+// limits: 업로드된 데이터의 한계
+// preservePath: 기본 이름 대신 파일의 전체 경로 유지
 
+// ex)
+// const multer = require('multer')
+// const upload = multer({ dest: './public/data/uploads/' })
+// app.post('/stats', upload.single('uploaded_file'), function (req, res) {
+// console.log(req.file, req.body)
+// });
 
+// .single(fieldname)
+// 이름이 fieldname인 단일 파일을 수락합니다.
+// 단일 파일은 req.file에 저장됩니다.
+// req.file <-- 사용 할수 있게 됨
 
-// ------------------------------- #8 USER PROFILE -------------------------------
+// multer 사용조건
+// 1. form 에 사용조건 삽입
+// 2. multer기본설정
+// 3. upload middleware만들기
+// 4. route에서 사용하기
 
+// # 8.07
+// !_절대 DB에는 파일을 저장하지 않는다. --> 폴더에 파일을 저장!!
+// !_DB에는 그 파일의 위치를 저장한다.
 
+// # 8.08
+
+// * express.static("파일명") --> 이것은 디렉토리의 내부파일을 제공한다.
+// ex) 
+
+// - 브라우저에게 upload 파일을 볼 권한을 주어야한다. 하지만 그것은 보안상 좋지 않다.
+// - 따라서 브라우저에게 어떤 폴더를 볼 수 있는지 static files serving이라는 것을 활성화 시킨다.
+
+// # 8.09
+// 샘플 비디오 파일
+// https://sample-videos.com/
+// https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4
+
+// multer limit
+// fileSize: multipart forms의 경우 최대 파일 크기 (바이트)
+// https://www.npmjs.com/package/multer
+
+// Byte to MB
+// 1000000 Bytes(백만 Bytes) = 1 MB (in decimal)
+// 1000000 Bytes = 0.95367431640625 MB (in binary)
+// https://www.gbmb.org/bytes-to-mb
 
 
 
