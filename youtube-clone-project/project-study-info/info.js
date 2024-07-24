@@ -1387,6 +1387,68 @@ https://github.com/login/oauth/authorize?client_id=입력값&allow_signup=false 
 // 1000000 Bytes = 0.95367431640625 MB (in binary)
 // https://www.gbmb.org/bytes-to-mb
 
+// # 8.11
+// ObjectId --> mongoose 에서만 사용할 수 있음
+// ex) type: mongoose.Schema.Types.ObjectId,
+//  --> object 이고, loggedInUser._id는 string으로 서로 비교 할려면 String으로 바꿔줘야 한다
+
+// *ref
+// ref 어디서 찾을것이냐를 말해준답니다.
+// 그리고 우리가 User.js에서 "User"이라는것을 만들었듯이 MongoDB 에 Collection에 있는것만 적을수 있답니다.
+// 그러니까 ref:"User"은 가능하지만 ref:"Name" 같이 우리가 만들지 않은 Collection 은 불가능합니다.
+
+// # 8.12
+// * populate("데이터를 넣을 공간을 정함") --> 데이터를 가져와서 " " 넣을곳을 정하여 거기에 저장 함
+// Mongoose에는 populate()를 통해 다른 컬렉션의 문서를 참조할 수 있습니다. Population은 문서의 지정된 경로를 다른 컬렉션의 문서로 자동 교체하는 프로세스입니다. 단일 문서, 여러 문서, 일반 개체, 여러 일반 개체 또는 쿼리에서 반환된 모든 개체를 채울 수 있습니다.
+// const story = await Story.findOne({ title: 'Casino Royale' }).populate('author');
+
+// populate의 사전적 정의
+// 타동사. (서류에 데이터를) 덧붙이다
+
+// ex) 
+// const video = await Video.findById(id)
+// console.log(video) 
+// --> owner: new ObjectId('66a0642a7d3c590563705022'),
+
+// populate("") 추가시 변화
+// const video = await Video.findById(id).populate("owner");
+// console.log(video)
+// --->
+// owner: {
+//   _id: new ObjectId('66a0642a7d3c590563705022'),
+//   email: 'll@ndk',
+//   socialOnly: false,
+//   username: 'gdf',
+//   password: '$2b$05$R34A7AlXUUKwiCbMyj7wfOxBeKxaGDwcy2KJ2TZbcj40wsnclSqvq',
+//   name: '박종혁',
+//   location: '11',
+//   __v: 0
+// },
+// Video.js 에서
+// --> owner: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"}
+// ref로 User를 설정 해주어서 user 값을 owner에 넣어준것이다.
+
+
+
+// # 8.13
+// User 모델에 array형식으로 video모델 연결, 속성추가
+// video controller에서
+// session _id 로 user을 찾고 user videos array에 created 된 newVideo의 id를 push한다
+
+// *id를 push하는 것임을 기억하기!
+// *user.save() 잊지말것!
+// > 지금은 save 될때마다 pre save로 hash가 계속 일어나고 있음
+// > bug fix 할 것
+
+// 추가기능 구현 : my profile에서 영상 진입시 edit 불가하도록, video delete, edit에 임의 수정 불가하도록 owner속성 사용해 접근금지 기능 추가하기
+
+
+// # 8.14
+// isModified() -->  Mongoose에서 사용하는 메서드로, 문서(Document)에서 특정 필드가 수정되었는지 여부를 확인하는 데 사용됨.
+// ex) 
+//   if(this.isModified("password")){
+//     this.password = await bcrypt.hash(this.password, 5);
+//   }
 
 
 // ------------------------------- //#8 USER PROFILE -------------------------------
@@ -1395,6 +1457,83 @@ https://github.com/login/oauth/authorize?client_id=입력값&allow_signup=false 
 
 
 // ------------------------------- #9 WEBPACK -------------------------------
+
+
+// # 9.1
+// Webpack은 .jpg 같은 거는 압축된 jpg 를 주고, JS 는 못생긴 거로, Sass 는 몬생긴 css 로 준다. 압축, 변형, 최소화등 필요한 작업들을 거치고 정리된 코드를 결과물로 준다.
+
+// webpack, webpack-cli devDependencies 로 설치
+// || 같음
+// npm i webpack webpack-cli -D
+// *D의 의미 : --save-dev 와 같음
+
+// webpack아 여기는 소스파일들이 있고 여기는 너가 결과물을 보낼 폴더야
+// webpack.config.js 파일에서 webpack 환경설정. 이 파일에서는 되게 몬생긴 JS 만 쓸 수 있다.
+
+// *** 필수 설정 ***
+// - entry: 우리가 처리하고자 하는 파일들(예쁜 js)
+// - entry: 이 프로퍼티에 우리가 처리하고자 하는 파일의 경로 입력
+// - output: 결과물
+//  - filename: 이 프로퍼티에 우리 결과물이 될 파일 이름 입력
+//  - path: 이 프로퍼티에 우리 결과물 파일을 어디에 저장할 지 지정 (이 경로는 절대경로여야 해!)
+
+Webpack 시작하기: https://webpack.kr/guides/getting-started/
+Webpack 설정: https://webpack.kr/concepts/configuration/
+
+Typescript환경에서 Webpack 설정하기
+npm install --save-dev typescript ts-loader webpack webpack-cli
+https://webpack.kr/guides/typescript/
+
+
+// # 9.2
+// const path = require("path"); --> path를 import 해준거
+// path.resolve() --> 몇 개가 됐는 내가 입력하는 파트들을 모아서 경로로 만들어 줌
+// ex) path: path.resolve(__dirname, "assets", "js")
+       --> /Users/tj02/종혁_연습/jjong_project/youtube-clone-project/assets/js
+// rules --> 객체 array 타입 rules : [ { } ]
+
+
+// /\.js$/ = RegExp 정규표션식
+// 정규표현식에선 .가 분류 커맨드이므로 그냥 .을 쓸려면 \.을 해줘야 된다.
+// 따라서 \.js는 .js이다
+
+// path.resolve([...paths])
+// path.resolve() 메서드는 경로 세그먼트 시퀀스를 절대 경로로 해석하는 데 사용됩니다. 경로 세그먼트가 전달되지 않으면 path.resolve()는 현재 작업 디렉토리의 절대 경로를 반환합니다.
+// **(__dirname: 현재 파일 위치의 절대 경로)
+
+// path.resolve('/foo/bar', './baz');
+// // Returns: '/foo/bar/baz'
+
+// https://nodejs.org/api/path.html#pathresolvepaths
+
+// babel-loader
+// npm install babel-loader -D
+// https://github.com/babel/babel-loader
+
+// webpack loader
+// https://webpack.kr/loaders/
+
+// webpack babel-loader
+// https://webpack.kr/loaders/babel-loader/
+
+// main.js에 빈 파일 나오는 오류 해결 방법
+// mode를 설정해주지 않으면 기본적으로 production으로 설정되어 client/js폴더 내에 작성한 main.js를 변환했을 때, 빈 파일로 나올 수 있습니다.
+// 빈 파일 나오시는 분들은 module.export안에 mode: "development"로 설정해주시면 됩니다.
+
+// Typescript webpack.config.js 설정
+// https://webpack.kr/guides/typescript/
+
+
+
+// # 9.3
+
+
+
+
+
+// # 9.4
+
+
 
 
 
