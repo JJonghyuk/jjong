@@ -2,9 +2,12 @@ extends layout/base
 include mixins/video
 
 block content 
-  form(method="GET")
+  form(method="GET").search__form
     input(type="text", placeholder="Search by title", name="keyword")
-    input(type="submit", value="Search now")
-  div 
+    button
+      i.fas.fa-search
+  div.video-grid
     each videoItem in videos
       +videoName(videoItem)
+    else
+      span.empty__message No videos found

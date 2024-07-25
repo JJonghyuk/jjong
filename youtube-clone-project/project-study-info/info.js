@@ -1526,15 +1526,78 @@ https://webpack.kr/guides/typescript/
 
 
 // # 9.3
+// * client file: Webpack이 처리하기 전 내가 코드를 작성할 파일
+// * assets file: browser가 읽고 처리할 파일
 
-
-
+// app.use("/static", express.static("assets"));
+// --> /static 경로는 내가 만들고 싶은 경로를 만들어 줌
+script(src="/static/js/main.js")
 
 
 // # 9.4
+// webpack은 뒤에서 부터 실행 한다.
+// ' use: ["style-loader", "css-loader", "sass-loader"],'
+// sass-loader -> css-loader -> style-loader 순
+
+// 1. webpack의 rules 내부의 'test: /\.scss$/,' 코드에서 모든 scss파일들을 긁어온다
+
+// 2. ' use: ["style-loader", "css-loader", "sass-loader"],'
+      코드에서 sass-loader -> css-loader -> style-loader 순으로 loader가 적용되어 긁어온 scss 파일들을 변환시킨다
+// 2.1 - sass-loader가 scss확장자 파일을 브라우저가 이해할 수 있는 css 파일로 변환시킨다
+// 2.2 - css-loader가 @import, url()등의 최신형 css 코드를 브라우저가 이해할 수 있는 코드로 변환시켜 동작할 수 있도록 한다
+// 2.3 - style-loader가 위 과정으로 변환시킨 css 코드를 DOM 내부에 적용시켜준다
+
+// 4. 변환된 코드가 output에서 설정된 파일 경로에 설정된 파일명으로 저장된다
+
+// 5. 저장된 변환 js 코드를 pug 파일에 적용시키기 위해 'script(src="/static/js/main.js")' 코드를 통해 긁어와 적용시킨다
+
+
+// # 9.5
+// MiniCssExtractPlugin
+// 이 플러그인은 CSS를 별도의 파일로 추출합니다. CSS가 포함된 JS 파일별로 CSS 파일을 생성합니다. mini-css-extract-plugin을 css-loader와 결합하는 것이 좋습니다.
+// npm install --save-dev mini-css-extract-plugin
+// https://webpack.kr/plugins/mini-css-extract-plugin/
+
+// MiniCssExtractPlugin Options
+// ```
+// plugins: [new MiniCssExtractPlugin({ filename: "css/style.css" })]
+// ```
+// https://webpack.js.org/plugins/mini-css-extract-plugin/#publicpath
+
+// CssMinimizerWebpackPlugin
+// https://webpack.kr/plugins/css-minimizer-webpack-plugin/
+
+// 1. webpack이 자동으로 js안에 css를 녹여낸걸 분리할것
+// 2. MiniCssExtract 설치
+// 3. webpack.config.js에 require로 설치
+// 4. module.exports에 plugins 속성 설정
+// 5. scss 로더[] 맨 앞에 MiniCssExtractPlugin.loader 삽입
+// => main.css가 분리되어 추출
+// 6. assets>js>main.js 와 assets>css>styles.css로 폴더 분리
+// - js : output 옵션 변경
+// - css : plugins에 filename 속성추가 (filename: 폴더경로, 파일명)
+// 7. pug에 css 연결하기
+// href 경로는 script와 마찬가지로 static(app.use에서 설정한)경로 후 폴더경로
 
 
 
+// # 9.6
+// Watch and WatchOptions
+// Webpack은 파일이 변경될 때마다 이를 감지하여 다시 컴파일 할 수 있습니다.
+
+// watch
+// watch 모드를 켭니다. 이제 초기 빌드 후 webpack은 해석 된 파일의 변경 사항을 계속 감시합니다. (webpack.config.js에 entry에 지정한 파일을 감시한다.)
+// https://webpack.kr/configuration/watch/
+
+// Nodemon
+// nodemon은 디렉토리의 파일 변경이 감지되면 노드 응용 프로그램을 자동으로 다시 시작하여 node.js 기반 응용 프로그램을 개발하는 데 도움이 되는 도구입니다.
+// https://github.com/remy/nodemon
+
+// Sample nodemon.json
+// https://github.com/remy/nodemon/blob/master/doc/sample-nodemon.md
+
+// Nodemon Config file
+// https://github.com/remy/nodemon#config-files
 
 
 
@@ -1546,8 +1609,20 @@ https://webpack.kr/guides/typescript/
 
 // ------------------------------- #10 STYLES -------------------------------
 
+// # 10.0
 
+Reset CSS
+https://meyerweb.com/eric/tools/css/reset
 
+FontAwesome CDN
+https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css
+
+// # 10.3
+double populate
+path : 가장먼저 내가 populate 하고싶은것
+populate : 가장먼저 받고싶은 popluate를 통해 받은 정보 안에 있는 정보를 받는다
+path : 내가 그 안에서 받고싶은 것
+model : 원래 이 정보를 가지고 있는 모델
 
 
 // ------------------------------- //#10 STYLES -------------------------------
