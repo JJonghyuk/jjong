@@ -1153,7 +1153,16 @@ https://github.com/login/oauth/authorize?client_id=입력값&allow_signup=false 
 
 
 // # 7.18
-// 1. fetch('url')로 다른 서버를 통해 데이터를 가져올 수있다.
+// 1. fetch('url')로 다른 서버를 통해 데이터를 가져 올 수있다(GET 요청을 보내는것).
+// 데이터를 받아오는거지만 보낼려면 따로 method를 기입 해줘야 한다.
+   ex)
+    fetch(`/api/videos/${id}/view`, {
+      method: "POST",
+    });
+
+// fetch()는 JavaScript에서 네트워크 요청을 쉽게 만들 수 있는 메서드입니다.
+   주로 HTTP 요청을 보내고, 응답을 받아 처리하는 데 사용됩니다.
+   fetch()는 Promise를 반환하므로 비동기적으로 작업을 처리할 수 있습니다.
 // 하지만, res.body 에 담겨있는 날것의 url로는 제대로 된 객체를 받아올 수 없다.
 
 // 2.때문에 중간에 .json 함수가 response의 스트림을 가져와 끝까지 읽고, res.body의 텍스트를 promise의 형태로 반환한다.
@@ -1633,6 +1642,50 @@ model : 원래 이 정보를 가지고 있는 모델
 // ------------------------------- #11 VIDEO PLAYER -------------------------------
 
 
+// # 11.0
+// --> 스크립트를 모든 페이지에 로드하는 방법을 바꾸기 위함
+// * entry애서 오브젝트로 2개 이상 만들시에 output에 [name]으로 설정해줘야 파일이 오브젝트명에 따라 만들어짐
+// entry: {
+//   main: "./src/client/js/main.js",
+//   videoPlayer: "./src/client/js/videoPlayer.js",
+//  },
+// output: {
+//   filename: "js/[name].js",
+
+// * block scripts --> block content처럼 script를 사용하고자 하는곳에만 사용 할 수 있음.
+
+// *주석 처리 하기 
+// 1. 화면에 보이는 주석처리 --> //
+// ex)
+    //
+      div
+        p 코멘트 내용
+
+// 2. 화면에 보이지 않음(pug 전용) --> //-
+// ex)
+    //-
+        div
+          p 코멘트 내용
+
+// # 11.1
+// - 비디오 element와 오디오 element는 둘다 html media element로부터 상속을 받는다.
+// https://developer.mozilla.org/ko/docs/Web/API/HTMLMediaElement
+
+// - video도 각각의 method와 eventListener가 있다.
+
+// # 11.03
+// input type="range"에 사용 가능한 이벤트 (change, input)
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
+
+// 이벤트: change
+// change 이벤트는 요소 변경이 끝나면 발생합니다.
+// 텍스트 입력 요소인 경우에는 요소 변경이 끝날 때가 아니라 포커스를 잃을 때 이벤트가 발생합니다.
+
+// 이벤트: input
+// input 이벤트는 사용자가 값을 수정할 때마다 발생합니다.
+// 키보드 이벤트와 달리 input 이벤트는 어떤 방법으로든 값을 변경할 때 발생합니다.
+
+
 
 
 
@@ -1643,8 +1696,28 @@ model : 원래 이 정보를 가지고 있는 모델
 
 // ------------------------------- #12 VIEWS API -------------------------------
 
+# 12.0
+// 이동하지않고 url을 바꾸지않고 (interactive하게 = 상호작용) controller실행
 
+# 12.1
+// timeupdate --> video에서만 가능한 이벤트로 비디오 시청을 끝내면 발생하는 이벤트 이다
+// video.addEventListener("timeupdate", );
 
+// 속성 --> true, false, read only 같은 거를 속성
+// Method(메소드) --> 어떤 기능을 하는거 load(), pause(), play() 같은 것들
+// event
+
+// HTML에 data저장하기 => JS 받아오기 : data-attribute
+// 저장(data-변수명) 받아오기(element.dataset)
+// js에서 data-set 가져올려면 --> 변수명.dataset.data변수명
+   ex)
+    const { id } = videoContainer.dataset;
+    const id = videoContainer.dataset.id;
+
+# 12.2
+// .status(200) : render( ) 하기 전에 상태 코드를 정할 수 있음 
+// VS
+// .sendStatus(200): 상태를 보내고 연결을 끊음
 
 
 // ------------------------------- //#12 VIEWS API -------------------------------
