@@ -1685,8 +1685,56 @@ model : 원래 이 정보를 가지고 있는 모델
 // input 이벤트는 사용자가 값을 수정할 때마다 발생합니다.
 // 키보드 이벤트와 달리 input 이벤트는 어떤 방법으로든 값을 변경할 때 발생합니다.
 
+// # 11.04
+// - loaded meta data event: 메타데이터가 로드 된 시점에 발생합니다
+// - meta 데이터는 비디오를 제외한 모든 것을 말한다.
+// - duration을 호출해서 총 시간을 기억할 수 있다.
+// - timeupdate: currentTime 속성이 변경되는 시점에 발생합니다.=> video가 업데이트 될 때마다 event를 호출한다.
+
+// loadeddata (en-US)
+// 미디어의 첫번째 프레임이 로딩 완료된 시점에 발생합니다.
+
+// timeupdate (en-US)
+// currentTime 속성이 변경되는 시점에 발생합니다.
 
 
+// # 11.05
+// - date Constructor은 JS안에 있는 data class를 말한다.
+// - new Date(0)은 1970/01/01 00:00:00을 의미한다. 컴퓨터는 이때부터 시간을 셌다. 단위는 밀리세컨드.
+// - .toISOString()=>날짜의 포맷을 맞춰주는 함수
+// - substr()=>자바스크립트의 문자열 자르기=>현재 안씀
+// - 대신 substring()=> 차이는 몇개가 아닌, 몇번째 index까지
+// subString(시작인덱스, 종료인덱스) 
+// --> new Date(29 * 1000).toISOString().substring(11, 19);
+
+
+
+
+// # 11.06
+// Fullscreen API
+// Fullscreen API 는 특정 요소 Element(와 해당 자손들을)를 full-screen mode로 표시하고, 더 이상 필요하지 않으면 full-screen mode를 종료하는 메서드를 추가합니다.
+
+// Element.requestFullscreen() (en-US)
+// 유저 에이전트가 지정한 요소(그리고 그 자손들까지)를 full-screen mode로 설정하고, 브라우저의 모든 UI 요소와 다른 모든 애플리케이션을 화면에서 제거하도록 요구합니다. full-screen mode가 활성화되면 Promise resolved를 반환합니다.
+
+// Document.exitFullscreen() (en-US)
+// user agent 가 full-screen mode에서 창 모드로 다시 전환되도록 요청합니다. full-screen mode가 완전히 종료되면 Promise resolved 를 반환합니다.
+
+// DocumentOrShadowRoot.fullscreenElement (en-US) (사용 추천)
+// fullscreenElement 속성은 DOM(혹은 shadow DOM)에서 현재 full-screen mode로 표시되는 요소Element를 알려줍니다. 이것이 null인 경우, document는 full-screen mode가 아닙니다.
+
+// Document.fullscreen (en-US) (더 이상 사용되지 않는 속성)
+// (fullscreenElement처럼 풀스크린을 감지할 수 있지만 사용 비추천)
+// 문서에 현재 full-screen mode로 표시되는 요소가 있는 경우 true, 그렇지 않으면 false의 Boolean 값입니다.
+
+// https://developer.mozilla.org/ko/docs/Web/API/Fullscreen_API
+
+
+// # 11.07
+
+
+
+// # 11.08
 
 
 // ------------------------------- //#11 VIDEO PLAYER -------------------------------
