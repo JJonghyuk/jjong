@@ -1730,8 +1730,14 @@ model : 원래 이 정보를 가지고 있는 모델
 // https://developer.mozilla.org/ko/docs/Web/API/Fullscreen_API
 
 
-// # 11.07
+// # 11.09
+// Mouse events
+// https://developer.mozilla.org/en-US/docs/Web/API/Element#mouse_events
 
+// 기본 로직
+// 1. 마우스를 움직이게 되면 기존 setTimeout이 clearTimeout에 의해 지워지고, 새로운 setTimeout이 생성되고, 실행되게 된다.
+// 2. 그 상태에서 마우스를 움직이지 않으면 새로운 setTimeout이 3초 후에 실행되게 되서 비디오 컨트롤바를 숨긴다.
+// 3. 움직이게 되면 다시 위의 1번처럼 기존 setTimeout은 clearTimeout에 의해 지워지고, 새로운 setTimeout이 생성된다.
 
 
 // # 11.08
