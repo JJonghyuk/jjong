@@ -1711,13 +1711,15 @@ model : 원래 이 정보를 가지고 있는 모델
 
 
 // # 11.06
+// * document.fullscreenElement --> 풀스크린이 아닐시 null 값을 반환.
+
 // Fullscreen API
 // Fullscreen API 는 특정 요소 Element(와 해당 자손들을)를 full-screen mode로 표시하고, 더 이상 필요하지 않으면 full-screen mode를 종료하는 메서드를 추가합니다.
 
 // Element.requestFullscreen() (en-US)
 // 유저 에이전트가 지정한 요소(그리고 그 자손들까지)를 full-screen mode로 설정하고, 브라우저의 모든 UI 요소와 다른 모든 애플리케이션을 화면에서 제거하도록 요구합니다. full-screen mode가 활성화되면 Promise resolved를 반환합니다.
 
-// Document.exitFullscreen() (en-US)
+// document.exitFullscreen() (en-US)
 // user agent 가 full-screen mode에서 창 모드로 다시 전환되도록 요청합니다. full-screen mode가 완전히 종료되면 Promise resolved 를 반환합니다.
 
 // DocumentOrShadowRoot.fullscreenElement (en-US) (사용 추천)
@@ -1751,6 +1753,7 @@ model : 원래 이 정보를 가지고 있는 모델
 // ------------------------------- #12 VIEWS API -------------------------------
 
 # 12.0
+// * api --> 프론트와 백엔드가 통신하는 방법을 말함
 // 이동하지않고 url을 바꾸지않고 (interactive하게 = 상호작용) controller실행
 
 # 12.1
