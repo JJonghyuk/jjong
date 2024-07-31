@@ -1785,7 +1785,133 @@ model : 원래 이 정보를 가지고 있는 모델
 // ------------------------------- #13 VIDEO RECORDER -------------------------------
 
 
+// # 13.0
 
+  - MediaDevices.getUserMedia()
+  MediaDevices 인터페이스의 getUserMedia() 메서드는 사용자에게 미디어 입력 장치 사용 권한을 요청하며, 사용자가 수락하면 요청한 미디어 종류의 트랙을 포함한 MediaStream (en-US)을 반환합니다. 스트림은 카메라, 비디오 녹화 장치, 스크린 공유 장치 등 하드웨어와 가장 비디오 소스가 생성하는 비디오 트랙과, 마이크, A/D 변환기 등 물리적과 가상 오디오 장치가 생성하는 오디오 스트림, 그리고 그 외의 다른 종류의 스트림을 포함할 수 있습니다.
+  보통, MediaDevices 싱글톤 객체는 다음과 같이 navigator.mediaDevices를 사용해 접근합니다.
+  navigator.mediaDevices.getUserMedia(constraints);
+  https://developer.mozilla.org/ko/docs/Web/API/MediaDevices/getUserMedia
+
+  - constraints
+  요청할 미디어 유형과 각각에 대한 요구사항을 지정하는 MediaStreamConstraints 객체. constraints 매개변수는 두 개의 구성 요소, video와 audio를 가지는 객체로, 요청할 미디어 유형에 대해 설명합니다. 둘 중 적어도 하나는 지정해야 합니다.
+  { audio: true, video: true }
+
+  regenerator-runtime  --> * 현재 업데이트 되서 따로 설치 안해도 async 사용 가능
+  Regenerator로 컴파일된 생성기 및 비동기 함수를 위한 독립 실행형 런타임입니다.
+  npm i regenerator-runtime
+  import regeneratorRuntime from "regenerator-runtime";
+  https://www.npmjs.com/package/regenerator-runtime
+
+
+// # 13.1
+
+  HTMLMediaElement srcObject
+
+  HTMLMediaElement 인터페이스의 srcObject 속성은 HTMLMediaElement와 연결된 미디어의 소스 역할을 하는 객체를 설정하거나 반환합니다.
+  그 객체는 MediaStream, MediaSource, Blob 또는 파일(Blob에서 상속됨)일 수 있습니다.
+
+  사용 예시
+  이 예에서 카메라의 MediaStream은 새로 생성된 요소에 할당됩니다.
+  ```
+  const mediaStream = await navigator.mediaDevices.getUserMedia({video: true});
+  const video = document.createElement('video');
+  video.srcObject = mediaStream;
+  ```
+  https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/srcObject
+
+  video.src : 정적인 비디오 파일 또는 URL
+  video.srcObject : 동적인 미디어 stream (Live 등)
+
+
+
+// # 13.2
+
+  MediaRecorder.ondataavailable
+  dataavailable 이벤트의 이벤트핸들러
+
+  dataavailable 이벤트
+  MediaRecorder.stop()이 실행될 때 발생하는 이벤트이다.
+
+
+  MediaRecorder
+  MediaStream Recording API의 MediaRecorder 인터페이스는 미디어를 쉽게 녹화할 수 있는 기능을 제공합니다. MediaRecorder() 생성자를 사용하여 생성됩니다.
+  https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder
+
+  MediaRecorder()
+  기록할 MediaStream이 지정된 새 MediaRecorder 개체를 만듭니다.
+
+  stream
+  기록될 MediaStream입니다. 이 소스 미디어는 navigator.mediaDevices.getUserMedia()를 사용하여 생성된 스트림이나 audio, video 또는 canvas 요소에서 가져올 수 있습니다.
+
+  MediaRecorder.start()
+  미디어 녹화를 시작합니다. 이 메서드는 선택적으로 밀리초 단위의 값을 가진 타임슬라이스 인수를 전달할 수 있습니다.
+
+  MediaRecorder.stop()
+  저장된 데이터의 최종 Blob을 포함하는 dataavailable 이벤트가 발생하는 시점에서 기록을 중지합니다.
+
+  MediaRecorder ondataavailable
+  MediaRecorder.stop()이 실행될 때 발생하는 이벤트이다.
+  https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/ondataavailable
+
+
+// # 13.3
+  *src
+  - src 속성은 미디어 요소의 소스를 URL 문자열로 설정하는 데 사용됩니다.
+  - 이는 주로 파일 경로, HTTP URL, 또는 데이터 URL을 통해 정적 파일을 로드하는 데 사용됩니다.
+
+  *srcObject
+  - srcObject 속성은 MediaStream, MediaSource, Blob, 또는 File 객체를 직접 설정하는 데 사용됩니다.
+  - 이는 주로 실시간 스트림이나 동적으로 생성된 미디어 소스를 HTMLMediaElement에 연결하는 데 사용됩니다.
+
+  차이점 요약:
+  - src:
+  URL 문자열을 사용하여 정적 미디어 파일을 설정합니다.
+  파일 경로, HTTP URL, 데이터 URL 등을 사용할 수 있습니다.
+
+  - srcObject:
+  MediaStream, MediaSource, Blob, File 객체 등을 직접 설정합니다.
+  실시간 스트림이나 동적으로 생성된 미디어 소스에 사용됩니다.
+
+  사용 시나리오:
+  - src: 서버에 저장된 비디오 파일을 재생하거나, 외부 URL에서 비디오를 로드할 때 사용합니다.
+  - srcObject: 웹캠 스트림을 실시간으로 표시하거나, 동적으로 생성된 미디어를 사용할 때 사용합니다.
+  src는 주로 정적 미디어 파일을 로드하는 데 사용되고, srcObject는 실시간 스트림이나 동적으로 생성된 미디어 소스를 다루는 데 사용된다는 점이 주요 차이점입니다.
+
+
+  -https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder
+  -MediaRecorder를 이용해서 녹화한다. MediaRecorder는 비디오든 오디오든 모든 것을 녹화할 수 있다.
+  -미리보기를 먼저 하고 녹화를 시작한다.
+  -MediaRecorder를 만들고 stream을 보내면 된다.
+  -recorder가 stop하면 dataavailable이 발생한다. e.data에 우리의 비디오가 있다. {Blob {size: 286951, type: 'video/x-matroska;codecs=avc1,opus'}}
+  -e.data는 파일이다.
+  -createObjectURL은 브라우저 메모리에서만 가능한 URL을 만들어준다.
+  -만들어진 URL은 웹사이트 상에 존재하는 것처럼 보이지만 실제론 없다. 단순히 브라우저의 메모리를 가리키기만 하고 있는 URL이다.
+  -위의 URL은 주소를 입력하면 나오지 않지만, 메모리에 저장하고 있어 비디오의 src에 입력이 가능하다.
+
+  URL.createObjectURL()
+
+  URL.createObjectURL() 정적 메서드는 주어진 객체를 가리키는 URL을 DOMString으로 반환합니다. 해당 URL은 자신을 생성한 창의 document가 사라지면 함께 무효화됩니다.
+
+  object
+  객체 URL을 생성할 File, Blob, MediaSource 객체.
+  const objectURL = URL.createObjectURL(object)
+
+  https://developer.mozilla.org/ko/docs/Web/API/URL/createObjectURL
+
+
+
+
+// # 13.4
+
+
+
+// # 13.5
+
+
+
+
+// # 13.6
 
 
 // ------------------------------- //#13 VIDEO RECORDER -------------------------------
