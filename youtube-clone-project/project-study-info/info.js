@@ -1841,7 +1841,7 @@ model : 원래 이 정보를 가지고 있는 모델
   MediaRecorder()
   기록할 MediaStream이 지정된 새 MediaRecorder 개체를 만듭니다.
 
-  stream
+  stream --> 0,1로 되어있는 구조로 흐르는 좁은 시냇물을(한 방향으로 흐르는 데이터의 흐름) 뜻함
   기록될 MediaStream입니다. 이 소스 미디어는 navigator.mediaDevices.getUserMedia()를 사용하여 생성된 스트림이나 audio, video 또는 canvas 요소에서 가져올 수 있습니다.
 
   MediaRecorder.start()
@@ -1850,8 +1850,16 @@ model : 원래 이 정보를 가지고 있는 모델
   MediaRecorder.stop()
   저장된 데이터의 최종 Blob을 포함하는 dataavailable 이벤트가 발생하는 시점에서 기록을 중지합니다.
 
-  MediaRecorder ondataavailable
+  MediaRecorder --> ondataavailable
   MediaRecorder.stop()이 실행될 때 발생하는 이벤트이다.
+  ex) 
+  recorder.ondataavailable = (event) => {
+    videoFile = URL.createObjectURL(event.data);
+    video.srcObject = null;
+    video.src = videoFile;
+    video.loop = true;
+    video.play();
+  };
   https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/ondataavailable
 
 
@@ -1903,7 +1911,14 @@ model : 원래 이 정보를 가지고 있는 모델
 
 
 // # 13.4
+  a 태그의 download 속성
+  - download 속성 추가시 링크 클릭하면 다운로드로 넘어가짐(download에 값 입력시 그 값에 맞게 파일명이 자동으로 입력됨)
+  - 해당 URL을 다운로드 하게끔 해주다는 의미
+  ex) <a href="blob:http://localhost:4000/de6e71bf-2355-43f0-a9af-2bbaafbebd46" download="MyRecording.webm"></a>
 
+
+  recorder = new MediaRecorder(stream, { mimeType: 'video/mp4' });
+  디폴트로 webm으로 되어 있어서 mimeType 안쓰고 해도 webm으로 저장이 되는데 mp4로 바꿀시 error.
 
 
 // # 13.5

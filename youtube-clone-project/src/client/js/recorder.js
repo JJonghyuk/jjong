@@ -3,12 +3,17 @@ const video = document.getElementById("preview");
 
 let stream;
 let recorder;
+let videoFile
 
 const handleDownload = () => {
-
+  const a = document.createElement("a");
+  a.href = videoFile;
+  a.download = "MyRecording.webm";
+  document.body.appendChild(a);
+  a.click();
 };
 
-const handleStop = () =>{
+function handleStop() {
   startBtn.innerText = "Download Recording";
   startBtn.removeEventListener("click", handleStop);
   startBtn.addEventListener("click", handleDownload);
@@ -20,8 +25,9 @@ const handleStart = () =>{
   startBtn.removeEventListener("click", handleStart);
   startBtn.addEventListener("click", handleStop);
   recorder = new window.MediaRecorder(stream);
+  // recorder = new window.MediaRecorder(stream), { mimeType: "video/webm"}; <-- 비디오 파일 확장자 설정
   recorder.ondataavailable = (event) => {
-    const videoFile = URL.createObjectURL(event.data);
+    videoFile = URL.createObjectURL(event.data);
     video.srcObject = null;
     video.src = videoFile;
     video.loop = true;
@@ -39,6 +45,6 @@ const init = async () => {
   video.play();
 };
 
-// init();
+init();
 
 startBtn.addEventListener("click", handleStart);
