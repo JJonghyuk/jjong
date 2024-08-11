@@ -28,6 +28,14 @@ const s3VideoStorage = multerS3({
   },
 });
 
+// export const removeFile = async (url) =>
+//   await s3Client.send(
+//   new DeleteObjectCommand({
+//     Bucket: "wetube-2024-jjong",
+//     Key: decodeURIComponent(url.split(".amazonaws.com/").pop().toString()),
+//   })
+// );
+
 export const  localsMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
   res.locals.siteName = "Wetube";
@@ -39,7 +47,7 @@ export const protectorMiddleware = (req, res, next) => {
   if(req.session.loggedIn){
     return next();
   } else {
-    req.flash("error", "Log in first.");
+    // req.flash("error", "Log in first.");
     return res.redirect("/login");
   }
 };
@@ -48,18 +56,10 @@ export const publicOnlyMiddleware = (req, res, next) => {
   if(!req.session.loggedIn){
     return next();
   }else{
-    req.flash("error", "Not authorized");
+    // req.flash("error", "Not authorized");
     return res.redirect("/");
   }
 }
-
-// export const removeFile = async (url) =>
-//   await s3Client.send(
-//   new DeleteObjectCommand({
-//     Bucket: "wetube-2024-jjong",
-//     Key: decodeURIComponent(url.split(".amazonaws.com/").pop().toString()),
-//   })
-// );
 
 export const avatarUpload = multer({ 
   limits:{
@@ -67,6 +67,7 @@ export const avatarUpload = multer({
   },
   storage: s3AvatarStorage,
 });
+
 export const videoUpload = multer({
   limits:{
     fileSize: 10000000,
