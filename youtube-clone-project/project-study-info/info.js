@@ -1960,6 +1960,30 @@ model : 원래 이 정보를 가지고 있는 모델
 
 // ------------------------------- #15 FLASH MESSAGES -------------------------------
 
+// # 15.0
+  redirect 할때 메시지를 보낼수있게함 : flash message publicOnlyMiddleware 에는 메시지 전달기능 없음
+  1. flash message 설치
+  npm i express-flash
+  유저에게 메시지를 템플릿에 남기는 기능, 단 session기반이므로 한 유저만 볼수있음
+  2. server.js에 flash 를 import
+  3. server.js에 app.use(flash())로 사용
+  4. protector과 publicOnlymiddleware에서 req.flash로 메시지사용
+  5. redirect되는 부분이나 404 status code를 넘겨주는 controller 부분, 업데이트 되거나 수정되는 부분 등에 req.flash 적용
+  *404 pug로 렌더되면 굳이 해줄필요 없음
+
+// # 15.1
+  1. pug 에서 messages local을 사용하여 text 보여주기
+  *express flash middleware의 기능 : locals.messages를 만들어서 템플릿에 자유롭게 사용가능
+  req.flash("메시지 로컬 객체 속성(error나 info)", "내용")
+  => messages.메시지 로컬객체 속성 로 pug에서 사용가능
+  *flash는 메시지를 단 한번만 보여줌(express가 메시지를 cache에서 지움)
+
+  2. pug코드를 mixin 으로 정리 후 mixin을 pug에 사용
+  mixin message(kind,text)
+  div.message(class=kind)
+  h1=text
+
+  3. scss 작업
 
 
 
@@ -1972,6 +1996,135 @@ model : 원래 이 정보를 가지고 있는 모델
 // ------------------------------- #16 COMMENT SECTION -------------------------------
 
 
+// # 16.1
+
+  1. Comments 스키마,모델 작성 (text, owner, video, createdAt)
+  2. Video,User모델 수정 : 많은 코멘트를 가질수 있음
+  3. init.js 에 Comment 모델 import
+
+
+// # 16.2
+
+  프론트엔드 작업
+  1.client>js에 commentSection.js 파일생성
+  2. webpack.config entry에 추가
+  (cleaning code)
+  3. webpack.config 의 entry 경로 겹치는 부분을 변수로 설정 , +로 적용
+
+  4. watch pug에 comment section script 추가
+  5. pug 에 comment section 만들기 div>form>textarea,button with class, id
+
+  6. commentSection.js 자바스크립트 작성 (id사용)
+  *button, textarea는 form내부에서 찾는게 더 clean
+  7. form submit 이벤트 핸들링
+  *event.prevent.default
+
+  8.videoContainer를 js로 받아와서 dataset.id사용
+  백엔드가 누가 request하는지(comment 다는지) session에서 확인가능 하도록 설정
+  *프론트엔드로 보는건 보안상 좋지않음, session이면 충분
+
+  9.loggedIn이 true일때만 comment박스가 보이도록 pug수정
+
+
+// # 16.3
+
+  fetch()를 이용해서 데이터 보내기
+  fetch() request에 포함할 수 있는 또 다른 선택적 속성은 body입니다. body 속성은 HTTP(또는 API) request의 일부로, 보내려는 모든 데이터를 포함할 수 있습니다. API request를 할 때, 데이터가 포함된 헤더와 함께 전송됩니다. fetch()를 사용하여 데이터를 보낼 때 보낸 데이터가 JSON인지 쿼리 문자열인지 API에 알려주는 Content-type을 지정해야 합니다.
+  https://gomakethings.com/how-to-send-data-to-an-api-with-the-vanilla-js-fetch-method/
+
+  fetch()를 이용해서 JSON객체 보내기
+  https://gomakethings.com/how-to-send-data-to-an-api-with-the-vanilla-js-fetch-method/#sending-data-as-a-json-object
+
+  댓글창에서 스페이스를 눌렀을 때 비디오도 같이 재생되는 문제 해결 방법
+  ```
+  const handlePressSpace = async (event) => {
+  if (event.target === document.body && event.code === "Space") {
+  await handlePlayVideo();
+  }
+  };
+  ```
+
+
+// # 16.4
+
+  express.text([options])
+  Express에 내장된 미들웨어 기능입니다.
+  body-parser를 기반으로 request payload로 전달한 문자열을 파싱합니다.
+  https://expressjs.com/ko/api.html#express.text
+
+  express.json([options])
+  Express에 내장된 미들웨어 기능입니다.
+  body-parser를 기반으로 request payload로 전달한 JSON을 파싱합니다.
+  문자열을 받아서 json으로 바꿔줍니다.
+  주의할 점은 express.json()은 header에 Content-Type이 express.json()의 기본 값인 "application/json"과 일치하는 request만 보는 미들웨어를 반환합니다.
+  다시 말해, headers: { "Content-type": "application/json" }인 request만 express.json()을 실행한다.
+  https://expressjs.com/ko/api.html#express.json
+
+  fetch()를 이용해서 JSON객체 보내기
+  https://gomakethings.com/how-to-send-data-to-an-api-with-the-vanilla-js-fetch-method/#sending-data-as-a-json-object
+
+
+
+
+// # 16.5
+
+  이번 구현 : 코멘트를 단 유저
+  *새로고침 => 브라우저 쿠키 => 백엔드 세션 받아옴
+  1. req에서 session:{user}, body:{text}, params:{id} 받아오기
+  2. fetch 부분 마지막에 textarea.value = "" 사용하여 request해줌과 동시에 비워주기
+  3. controller 설정 : mongoose 사용, video여부 확인
+  *404 status 보내기 : kill request
+  4. comment create 하기
+  *201 status : created
+
+
+
+// # 16.6
+
+  1.video 에서 comment 정보를 받을 수 있도록 설정
+  - comment controller가 create후 comment를 update 후 저장
+  video.comments.push(comment._id)
+  video.save()
+  - video watch controller에서 populate("comments")
+
+  2. pug에 each문으로 video comments array에 있는 comment들을 나열해준다
+  - array.reverse를 하면 newcomment부터 나열가능
+
+  3. pug에 class를 지정하고 scss 꾸미기
+
+  *실시간처럼 보이게 하는 법(add하면 바로 댓글달리게)
+  fetch를 await하고 handlesubmit 마지막에 window.location.reload()
+  => 실제로 새로고침 해야한다는 단점
+
+
+// # 16.7
+
+  -만약 댓글을 새로 생성할 때마다 페이지를 reload시킨다면 비디오와 그에 대한 comment들을 새롭게 찾는 결과가 나타나 페이지에 부하를 줄 수 있다.
+  -fetch로 댓글을 만들고 return값을 받아보면 status code들이 있다. status code가 201일 경우 fake comment를 작성해준다.
+  -pug에 구조를 그대로 js로 만들고 text로 받은 내용을 그대로 복사해준다.
+  -appendChild대신 prepend를 사용하면 역순으로 생성
+
+
+
+// # 16.8
+
+  HTTP Method 종류와 의미
+
+  주요 메소드 5가지
+
+  GET : 리소스 조회
+  POST : 요청 데이터 처리, 주로 데이터 등록에 사용
+  PUT : 리소스를 대체, 해당 리소스가 없으면 생성
+  PATCH : 리소스를 일부만 변경
+  DELETE : 리소스 삭제
+  기타 메소드 4가지
+
+  HEAD: GET과 동일하지만 메시지 부분을 제외하고, 상태 줄과 헤더만 반환
+  OPTIONS: 대상 리소스에 대한 통신 가능 옵션을 설명(주로 CORS에서 사용)
+  CONNECT: 대상 자원으로 식별되는 서버에 대한 터널을 설정
+  TRACE: 대상 리소스에 대한 경로를 따라 메시지 루프백 테스트를 수행
+
+  - https://kyun2da.dev/CS/http-%EB%A9%94%EC%86%8C%EB%93%9C%EC%99%80-%EC%83%81%ED%83%9C%EC%BD%94%EB%93%9C/
 
 
 
@@ -1982,6 +2135,19 @@ model : 원래 이 정보를 가지고 있는 모델
 
 // -------------------------- #17 [🔥 2024 UPDATE 🔥] DEPLOYMENT --------------------------
 
+// # 17.0
+
+  Fly.io
+  Node.js 애플리케이션 배포를 위한 곳
+  https://fly.io
+
+  MongoDB Atlas Database
+  데이터베이스 배포를 위한 곳
+  https://www.mongodb.com/products/platform/atlas-database
+
+  AWS (Amazon Web Services)
+  사용자가 업로드하는 파일을 저장하기 위한 곳
+  https://aws.amazon.com/ko
 
 
 

@@ -105,7 +105,6 @@ const handleMouseLeave = () => {
 }
 
 const handleKeycodeVideoPlay = (event) => {
-  console.log(event);
   if(event.code === "Space"){
     event.preventDefault();
     handlePlayClick();

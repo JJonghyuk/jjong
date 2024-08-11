@@ -15,6 +15,7 @@
 @import "./screens/search.scss";
 @import "./screens/profile.scss";
 @import "./screens/edit-profile.scss";
+@import "./screens/watch.scss";
 
 // Defaults
 a {
@@ -36,6 +37,8 @@ main {
   margin-top: 50px;
 }
 
+button{cursor:pointer;margin:0;padding:0;background:none;border:0;}
+
 .blind{
   position:absolute; 
   overflow:hidden; 
@@ -44,4 +47,33 @@ main {
   height:1px; 
   clip:rect(1px, 1px, 1px, 1px); 
   clip-path:inset(50%);
+}
+
+@keyframes goAway {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+.message {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 200px;
+  padding: 10px 20px;
+  border-radius: 10000px;
+  text-align: center;
+  animation: goAway 0.5s ease-in-out forwards;
+  animation-delay: 5s;
+  &.error {
+    background-color: tomato;
+    color: white;
+  }
 }
