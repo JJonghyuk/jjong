@@ -89,6 +89,7 @@
 
 // #2.4
 // * nodemon 패키지를 설치하여 실시간으로 수정된 사항을 확인 할 수 있다.
+// - npm install nodemon --save-dev
 //   "dev": "nodemon --exec babel-node src/server.js" -->  nodemon --exec 를 사용하여 실시간으로 변경된 사항을 확인 할수 있다.
 
 

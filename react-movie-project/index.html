@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>리엑트 연습</title>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script src="https://www.unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+  // const h3 = React.createElement(
+  //   "h3",
+  //   {
+  //     id: "title",
+  //     onMouseEnter: () => console.log("mouse enter"),
+  //   },
+  //   "Hello I'm a title"
+  // );
+  // const btn = React.createElement(
+  //   "button",
+  //   {
+  //     onClick: () => console.log("im clicked"),
+  //     style:{
+  //       backgroundColor: "tomato",
+  //     }
+  //   },
+  //   "Click me"
+  // );
+
+  // let counter = 0;
+  // function countUp(){
+  //   counter = counter + 1;
+  //   render();
+  // }
+  // function render(){
+  //   ReactDOM.render(<App/>,root);
+  // }
+  // const  = () => (
+  //   <div>
+  //     <h3>Total clicks: {counter}</h3>
+  //     <button onClick={countUp}>Click me</button>
+  //   </div>
+  // );
+  // render();
+
+  // react 문법을 기본적으로 사용하는 방법
+  // const App = () => {
+  //   const [counter, setCounter] = React.useState(0);
+  //   const onClick = () => {
+  //     // 방법 2가지 -> 1. 직접할당 2번째 방법이 안전함
+  //     // setCounter(counter + 1);
+  //     setCounter((current) => current + 1);
+  //   }
+  //   return(
+  //     <div>
+  //       <h3>Total clicks: {counter}</h3>
+  //       <button onClick={onClick}>Click me</button>
+  //     </div>
+  //   )
+  // }
+  // const root = document.getElementById("root");
+  // ReactDOM.render(<App/>,root);
+  
+  const App = () => {
+    const [amount, setAmount] = React.useState(0);
+    const [flipped, setFlipped] = React.useState(false);
+    const onChange = (event) => {
+      setAmount(event.target.value);
+    }
+    const reset = () => setAmount(0);
+    const onFlip = () => {
+      reset();
+      setFlipped((current) => !current);
+    }
+    return(
+      <div>
+        <h1 className="title">Super Converter</h1>
+        <div>
+          <label htmlFor="minutes">분</label>
+          <input id="minutes" type="number" placeholder="분" value={flipped ? amount * 60 : amount} disabled={flipped} onChange={onChange}/>
+        </div>
+        <div>
+          <label htmlFor="hours">시간</label>
+          <input id="hours" type="number" placeholder="시" value={flipped ? amount : Math.round(amount / 60)} disabled={!flipped} onChange={onChange}/>
+        </div>
+        <button type="button" onClick={reset}>Reset</button>
+        <button type="button" onClick={onFlip}>Flip</button>
+      </div>
+    )
+  }
+  const root = document.getElementById("root");
+  ReactDOM.render(<App/>,root);
+</script>
+</html>
+
