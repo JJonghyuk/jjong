@@ -7,3 +7,4 @@
 let name = 0;
 console.log("hello", name ?? "anonymous");
 // "hello", 0 --> 이렇게 출력 된다
+                                             
