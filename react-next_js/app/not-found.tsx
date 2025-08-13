@@ -4,8 +4,7 @@ export default function Page() {
   return (
     <div>
       <Nav />
-      <h1>Welcome to My Page</h1>
-      <p>This is a simple page built with Next.js.</p>
+      <h1>not-found</h1>
     </div>
   );
 }
