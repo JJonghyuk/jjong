@@ -1,0 +1,77 @@
+import { useState } from "react";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
+import styled from "styled-components";
+import { toDoStats } from "./atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+
+const Wrapper = styled.div`
+  display: flex;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const Boards = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(1, 1fr);
+`;
+
+const Board = styled.div`
+  padding: 30px 20px;
+  min-height: 200px;
+  background-color: ${(props) => props.theme.boardColor};
+  border-radius: 5px;
+`;
+
+const Card = styled.div`
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: ${(props) => props.theme.cardColor};
+  border-radius: 5px;
+`;
+
+function App() {
+  const [toDos, setToDos] = useRecoilState(toDoStats);
+  const onDragEnd = ({ destination, source }: DropResult) => {
+    console.log(destination?.index);
+  };
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Wrapper>
+        <Boards>
+          <Droppable droppableId="one">
+            {(dropMagic) => (
+              <Board ref={dropMagic.innerRef} {...dropMagic.droppableProps}>
+                {toDos.map((toDo, index) => (
+                  <Draggable key={index} draggableId={toDo} index={index}>
+                    {(dropMagic02) => (
+                      <Card
+                        ref={dropMagic02.innerRef}
+                        {...dropMagic02.draggableProps}
+                        {...dropMagic02.dragHandleProps}
+                      >
+                        {toDo}
+                      </Card>
+                    )}
+                  </Draggable>
+                ))}
+                {dropMagic.placeholder}
+              </Board>
+            )}
+          </Droppable>
+        </Boards>
+      </Wrapper>
+    </DragDropContext>
+  );
+}
+
+export default App;
