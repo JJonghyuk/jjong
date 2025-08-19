@@ -12,7 +12,8 @@ export default function Nav() {
           <Link href="/">Home</Link> {path === "/" ? "🔥" : ""}
         </li>
         <li>
-          <Link href="/jj">JJ Page</Link> {path === "/jj" ? "🔥" : ""}
+          <Link href="/about-us">about-us Page</Link>{" "}
+          {path === "/about-us" ? "🔥" : ""}
         </li>
       </ul>
     </nav>

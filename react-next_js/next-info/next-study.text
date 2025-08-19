@@ -6,9 +6,10 @@
 4. app 폴더생성 후 page.tsx or page.jsx 만들기 (page.tsx가 있어야지 노출됨)
 5. npm run dev 해보기
 
-#2 [🔥 2024 Update 🔥] Routing
+----------------------------- 🟡#2 [🔥 2024 Update 🔥] Routing -----------------------------
 
-# 2.1
+🟡 # 2.1
+
 Defining Routes
 
 Creating Routes
@@ -24,7 +25,8 @@ ex) app/page.tsx
 
 https://nextjs.org/docs/app/building-your-application/routing/defining-routes
 
-# 2.2
+🟡 # 2.2
+
 Not Found
 not-found.tsx은 일치하지 않는 전역 URL을 처리합니다.
 https://nextjs.org/docs/app/api-reference/file-conventions/not-found
@@ -37,7 +39,8 @@ React client hook in Server Component 오류
 서버 컴포넌트에서 React 클라이언트 훅을 사용하고 있을 때 발생하는 오류로 'use client' 를 추가해 클라이언트 컴포넌트로 바꿔줘야 함
 https://nextjs.org/docs/messages/react-client-hook-in-server-component
 
-# 2.3
+🟡 # 2.3
+
 렌더링이란?
 Next.js가 리액트 컴포넌트를 브라우저가 이해할 수 있는 html로 변환하는 작업
 
@@ -75,20 +78,123 @@ SSR은 웹페이지 렌더링의 주체가 서버인 방식입니다. 사용자�
 - 잦은 서버 요청: 페이지를 이동할 때마다 서버가 새로운 HTML을 만들어 보내야 하므로 서버에 부담이 커질 수 있습니다.
 - 느린 페이지 전환: 페이지 이동 시마다 전체 페이지를 새로고침하는 것처럼 깜빡이는 현상이 발생할 수 있습니다.
 
+참고 - https://hahahoho5915.tistory.com/52
 
-# 2.4
+✨ 기본 동작 방식 ✨
+Next.js는 기본적으로 **서버 컴포넌트(Server Components)**를 사용하여 SSR(서버 사이드 렌더링) 방식으로 동작합니다. 이는 페이지의 초기 로딩 속도를 빠르게 하고, SEO에 유리하다는 장점이 있습니다. 사용자가 페이지에 접속하면, 서버가 완성된 HTML을 만들어 보내주기 때문에 화면이 빠르게 표시됩니다.
 
-# 2.5
+CSR 방식 활용하기
+Next.js에서 CSR 방식이 필요할 때는 다음 두 가지 방법으로 구현할 수 있습니다.
 
-# 2.6
+클라이언트 컴포넌트 사용: app 라우터에서 "use client" 지시어를 사용해 컴포넌트를 클라이언트 컴포넌트로 지정하면, 이 컴포넌트와 그 자식 컴포넌트들은 브라우저에서 렌더링됩니다. useState, useEffect와 같이 사용자 상호작용이 필요한 부분에 이 방식을 사용합니다.
 
-# 2.7
+동적 가져오기(Dynamic Imports): next/dynamic을 사용해 특정 컴포넌트를 동적으로 가져오면, 해당 컴포넌트는 클라이언트에서만 렌더링되도록 만들 수 있습니다.
 
-# 2.8
+SSR/CSR 선택 가이드
+SSR: SEO가 중요하거나 초기 로딩 속도가 빨라야 하는 페이지(블로그, 뉴스 기사, 랜딩 페이지 등)에 적합합니다.
 
-# 2.9
+CSR: 로그인 후 보여지는 사용자 대시보드나 관리자 페이지처럼 사용자 상호작용이 많고 SEO가 중요하지 않은 페이지에 적합합니다.
 
+결론적으로, Next.js는 SSR을 기본으로 하되, CSR이 필요한 부분만 선택적으로 적용하여 두 방식의 장점을 모두 취할 수 있는 강력한 프레임워크입니다.
 
+🟡 # 2.4
+
+하이드레이션(Hydration)이란?
+
+서버사이드 렌더링(SSR)을 통해 만들어 진 인터랙티브 하지 않은 HTML을 클라이언트 측 자바스크립트를 사용하여 인터랙티브한 리액트 컴포넌트로 변환하는 과정을 말한다.
+(서버 환경에서 이미 렌더링된 HTML에 React를 붙이는 것)
+
+🟡 # 2.5
+
+Client Components
+
+클라이언트 컴포넌트를 사용하려면 파일 상단, import 위에 React "use client" 지시어를 추가하면 됩니다.
+"use client"은 서버와 클라이언트 컴포넌트 모듈 간의 경계를 선언하는 데 사용됩니다.
+즉, 파일에 "use client"을 정의하면 하위 컴포넌트를 포함하여 해당 파일로 가져온 다른 모든 모듈이 클라이언트 번들의 일부로 간주됩니다.
+
+https://nextjs.org/docs/app/building-your-application/rendering/client-components
+
+🟡 # 2.6
+
+Nextjs에서는 모든 컴포넌트는 서버에서 먼저 pre render됨 (클라이언트, 서버 컴포넌트 모두 동일)
+‘use client’ 명령어를 가진 컴포넌트는 hydrate 됨 (클라이언트에서도 렌더됨)
+hydrate란? HTML을 인터랙티브한 리액트 컴포넌트로 바꾸는 것
+
+지원되지 않는 패턴: 서버 컴포넌트를 클라이언트 컴포넌트로 가져오기
+서버 컴포넌트를 클라이언트 컴포넌트로 import 할 수 없습니다.
+https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#unsupported-pattern-importing-server-components-into-client-components
+
+지원되는 패턴: 서버 컴포넌트를 클라이언트 컴포넌트에 props로 전달
+서버 컴포넌트를 클라이언트 컴포넌트에 prop으로 전달할 수 있습니다.
+일반적인 패턴은 React children prop을 사용하여 클라이언트 컴포넌트에 "slot"을 만드는 것입니다.
+https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#supported-pattern-passing-server-components-to-client-components-as-props
+
+🟡 # 2.7
+
+Pages and Layouts
+
+React 모델을 사용하면 페이지를 일련의 컴포넌트로 분해할 수 있습니다. 이러한 컴포넌트 중 다수는 페이지 간에 재사용되는 경우가 많습니다.
+예를 들어 모든 페이지에 동일한 네비게이션 바와 푸터가 있을 수 있습니다.
+https://nextjs.org/docs/pages/building-your-application/routing/pages-and-Layouts
+
+import Navbar from './navbar'
+import Footer from './footer'
+
+export default function Layout({ children }) {
+return (
+   <>
+      < Navbar / >
+      < main >{children}< /main >
+      < Footer / >
+      </>
+   )
+}
+
+🟡 # 2.8
+
+Metadata
+Next.js에는 향상된 SEO를 위해 애플리케이션 메타데이터
+(ex: HTML head 엘리먼트 내의 meta 및 link 태그)를 정의하는 데 사용할 수 있는 메타데이터 API가 있습니다.
+https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+
+Dynamic Metadata (동적 메타데이터)
+generateMetadata 함수를 사용하여 동적 값이 필요한 메타데이터를 가져올 수 있습니다.
+https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata
+
+🟡 # 2.9
+
+주의!
+Next.js 15 버전부터는 params 및 searchParams는 promise이므로 값에 접근하려면 async/await 또는 React의 use함수가 필요합니다.
+
+*Dynamic Routes -> url의 id 값 가져오는 방법
+export default async function MovieDetailsPage({ params, searchParams }) {
+  const { id } = await params;
+  console.log("params:", { id });
+  console.log("searchParams:", await searchParams);
+  return <h1>Movie Details</h1>;
+}
+
+-----------------------------
+
+export default async function MovieDetailsPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const { id } = await params;
+  return <h1>Movie Details:{id}</h1>;
+}
+
+🟡 # 2.10
+
+next.js 15v -> https://nextjs.org/docs/messages/sync-dynamic-apis
+
+✨ 정리 ✨
+- Nextjs에서는 기본적으로 백엔드 서버에서 클라이언트 컴포넌트와 서버 컴포넌트 모두 렌더링됨
+- 클라이언트 컴포넌트만 클아이언트에서 다시 렌더링되거나 하이드레이트됨
+- 모든 컴포넌트는 기본적으로 서버 컴포넌트이고, ‘use client’를 명시한 컴포넌트만 클라이언트 컴포넌트
+
+----------------------------- //🟡#2 [🔥 2024 Update 🔥] Routing -----------------------------
 
 
 
