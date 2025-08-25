@@ -206,7 +206,51 @@ next.js 15v -> https://nextjs.org/docs/messages/sync-dynamic-apis
 ----------------------------- //🟡#2 [🔥 2024 Update 🔥] Routing -----------------------------
 
 
+----------------------------- 🟡 #3 [🔥 2024 Update 🔥] Data Fetching -----------------------------
+
+🟡 # 3.0
+API
+https://nomad-movies.nomadcoders.workers.dev
+
+🟡 # 3.1
+
+React JS 에서 기본적으로 fetch 하는 법
+🔥🔥🔥
+export default function Page(){
+  const [isLoading, setIsLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+  const getMovies = async () =>{
+    const response = await fetch("https://nomad-movies.nomadcoders.workers.dev/movies");
+    const json = await response.json();
+    setMovies(json);
+    setIsLoading(false);
+  };
+  useEffect(()=>{
+    getMovies();
+  },[])
+  return <div>{isLoading ? "Loading..." : JSON.stringify(movies)}</div>
+}
+🔥🔥🔥
 
 
+🟡 # 3.2
+fetch
+Next.js는 기본 웹 fetch() API를 확장하여 서버의 각 요청이 자체 영구 캐싱 의미를 설정할 수 있도록 합니다.
+https://nextjs.org/docs/app/api-reference/functions/fetch
+
+Error Lens
+VSCode에서 오류, 경고 및 기타 언어 진단을 강조하여 표시해주는 익스텐션
+https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens
+
+🟡 # 3.3
+
+🟡 # 3.4
+
+🟡 # 3.5
+
+🟡 # 3.6
+
+🟡 # 3.7
 
 
+----------------------------- //🟡 #3 [🔥 2024 Update 🔥] Data Fetching -----------------------------
